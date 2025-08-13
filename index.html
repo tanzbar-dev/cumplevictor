@@ -22,7 +22,6 @@
             min-height: 100vh;
             padding: 1rem;
         }
-        /* El contenedor principal ahora no tiene un ancho máximo fijo */
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -30,29 +29,27 @@
             border: 2px solid #6a4f41; /* Borde de color marrón claro */
             width: 100%;
         }
-        /* Clase base para todas las páginas con padding */
         .page-content {
             display: none; /* Oculta todas las páginas por defecto */
             transition: opacity 0.5s ease-in-out;
-            padding: 2.5rem;
             position: relative;
-            text-align: center; /* Centramos el contenido por defecto */
-        }
-        /* Nueva clase para las páginas con video, sin padding horizontal para que el video ocupe el 100% */
-        .page-content.video-page {
-            padding: 0;
+            text-align: center;
         }
         .page-content.active {
             display: block; /* Muestra solo la página activa */
             animation: slideIn 0.8s forwards;
         }
+        /* Nueva clase para las páginas con video, sin padding horizontal para que el video ocupe el 100% */
+        .page-content.video-page {
+            padding: 0;
+        }
         /* Contenedor interno para el texto y otros elementos, con ancho limitado y padding */
         .content-wrapper {
-            max-width: 60rem; /* max-w-4xl en Tailwind */
+            max-width: 60rem;
             margin-left: auto;
             margin-right: auto;
             text-align: center;
-            padding: 2.5rem; /* El padding se aplica aquí, no en el padre */
+            padding: 2.5rem;
         }
         h1, h2 {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -91,7 +88,7 @@
             box-shadow: 0 12px 20px rgba(74, 124, 89, 0.4);
         }
         input[type="text"], input[type="number"] {
-            background-color: #3c302a; /* Fondo más oscuro para el input */
+            background-color: #3c302a;
             color: #f0f0c0;
             border: 1px solid #6a4f41;
             transition: all 0.3s ease;
@@ -120,7 +117,7 @@
             z-index: 1000;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             animation: zoomIn 0.3s forwards;
-            display: none; /* Hidden by default */
+            display: none;
         }
         @keyframes zoomIn {
             from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
@@ -149,7 +146,7 @@
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
-    <div id="stage-0" class="page-content">
+    <div id="stage-0" class="page-content active">
         <div class="content-wrapper">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
             <p class="text-lg md:text-xl mb-8">
@@ -390,7 +387,6 @@
     // Función principal para cambiar de etapa
     function goToStage(stageNumber) {
         // Aseguramos que la etapa es un número y está dentro del rango
-        // Se ha actualizado el rango para incluir la etapa 15
         if (typeof stageNumber !== 'number' || stageNumber < 0 || stageNumber > 15) {
             console.error("Etapa inválida:", stageNumber);
             return;
@@ -405,16 +401,12 @@
         currentStage = stageNumber;
         const newStageElement = document.getElementById(`stage-${currentStage}`);
         
-        // CORRECCIÓN: Se añade una validación para evitar errores si el elemento no existe (problema de caché)
         if (newStageElement) {
             newStageElement.classList.add('active');
         } else {
             console.error(`Error: No se encontró la etapa con ID 'stage-${currentStage}'`);
-            // Regresar a la pantalla de inicio si la etapa no existe
-            const defaultStageElement = document.getElementById('stage-0');
-            if (defaultStageElement) {
-                defaultStageElement.classList.add('active');
-            }
+            // En caso de error, volvemos a la pantalla de inicio
+            goToStage(0);
         }
         
         // Desplazar la vista al principio de la página
@@ -442,12 +434,16 @@
         }
     });
 
-    // Lógica para el Reto de las Medallas (Etapa 9)
+    // CORRECCIÓN CLAVE: Lógica para el Reto de las Medallas (Etapa 9)
+    // El problema estaba en el tipo de dato, ahora parseamos el valor a entero.
     document.getElementById('medallas-button').addEventListener('click', function() {
         const answer = document.getElementById('medallas-input').value.trim();
         const feedback = document.getElementById('medallas-feedback');
-        // La respuesta correcta se ha cambiado a 38
-        if (answer === "38") {
+        // Convertimos la entrada a un número para una comparación estricta
+        const numericAnswer = parseInt(answer, 10);
+        
+        // La respuesta correcta es 38
+        if (numericAnswer === 38) {
             feedback.innerText = "";
             goToStage(10); // Pasar a la siguiente etapa
         } else {
@@ -459,8 +455,10 @@
     document.getElementById('cofre-button').addEventListener('click', function() {
         const answer = document.getElementById('cofre-input').value.trim();
         const feedback = document.getElementById('cofre-feedback');
+        const numericAnswer = parseInt(answer, 10);
+        
         // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
-        if (answer === "301") {
+        if (numericAnswer === 301) {
             feedback.innerText = "";
             goToStage(14); // Pasar a la etapa final
         } else {
@@ -468,20 +466,23 @@
         }
     });
 
-    // Llama a esta función al cargar la página para determinar la etapa inicial
+    // CORRECCIÓN CLAVE: Nueva lógica de inicialización en window.onload
+    // Ahora, el script busca y va directamente a la etapa solicitada, sin pasar por la etapa 0.
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const stageParam = urlParams.get('stage');
-        let initialStage = 0; // La etapa inicial por defecto es 0
+        let initialStage = 0;
+        
         if (stageParam) {
             const stageNumber = parseInt(stageParam);
-            // Si el parámetro es un número válido, lo usamos como etapa inicial
-            // Se ha actualizado el rango para incluir la etapa 15
+            // Validamos que el número de etapa sea válido
             if (!isNaN(stageNumber) && stageNumber >= 0 && stageNumber <= 15) {
                 initialStage = stageNumber;
+            } else {
+                console.error("Parámetro 'stage' inválido en la URL, se usará la etapa 0.");
             }
         }
-        // Navegamos a la etapa inicial correcta
+        
         goToStage(initialStage);
     };
 
