@@ -25,7 +25,7 @@
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
-            max-width: 900px;
+            /* Se ha quitado el max-width fijo para que el contenedor se expanda mejor */
             animation: fadeIn 1.2s ease-in-out;
             border: 2px solid #6a4f41; /* Borde de color marrón claro */
         }
@@ -146,7 +146,8 @@
     <button onclick="closeMessageBox()" class="adventure-button">Cerrar</button>
 </div>
 
-<div class="container-card w-full p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
+<!-- El contenedor principal ahora tiene un ancho máximo para centrarse en pantallas grandes, pero sigue siendo responsivo -->
+<div class="container-card w-full max-w-4xl mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
     <div id="stage-0" class="page-content active">
@@ -168,8 +169,8 @@
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
     <div id="stage-1" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
-        <!-- AQUÍ VA EL VIDEO DE BIENVEVIDA -->
-        <div class="video-responsive rounded-xl overflow-hidden mb-8">
+        <!-- Contenedor del video con ancho máximo para que se vea más grande -->
+        <div class="video-responsive w-full max-w-2xl mx-auto rounded-xl overflow-hidden mb-8">
             <iframe id="video-bienvenida" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=0" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
@@ -405,8 +406,8 @@
     <!-- Etapa 15: Sorpresa de Bob Esponja -->
     <div id="stage-15" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
-        <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
-        <div class="video-responsive rounded-xl overflow-hidden mb-8">
+        <!-- Contenedor del video con ancho máximo para que se vea más grande -->
+        <div class="video-responsive w-full max-w-2xl mx-auto rounded-xl overflow-hidden mb-8">
             <iframe id="video-sorpresa" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=0" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
