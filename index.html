@@ -183,7 +183,8 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="video-bienvenida" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <!-- Usamos la API de YouTube para controlar la reproducción de manera fiable -->
+            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?enablejsapi=1&origin=https://cumplevictor.github.io" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -450,7 +451,7 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="video-sorpresa" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?enablejsapi=1&origin=https://cumplevictor.github.io" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -461,122 +462,162 @@
 
 </div>
 
+<!-- Incluimos la API de YouTube -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Obtenemos la etapa actual de la URL
+    // Variables para almacenar los objetos de los reproductores de YouTube
+    let players = {};
+
+    // Esta función es llamada automáticamente por la API de YouTube cuando está lista
+    function onYouTubeIframeAPIReady() {
         const urlParams = new URLSearchParams(window.location.search);
         const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
         
-        // Función para mostrar solo una etapa específica
-        const showStage = (stageNumber) => {
-            document.querySelectorAll('.page-content').forEach(page => {
-                // Antes de ocultar la página, detenemos el video si lo tiene
-                if (page.classList.contains('active')) {
-                    const videoIframe = page.querySelector('iframe');
-                    if (videoIframe) {
-                        const originalSrc = videoIframe.src.replace('?autoplay=1', '');
-                        videoIframe.src = originalSrc;
+        // Creamos los reproductores una vez que la API está lista
+        players['youtube-player-1'] = new YT.Player('youtube-player-1', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+
+        players['youtube-player-2'] = new YT.Player('youtube-player-2', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+
+        // Mostramos la etapa inicial
+        showStage(currentStage);
+    }
+    
+    // Esta función se llama cuando un reproductor está listo
+    function onPlayerReady(event) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
+
+        // Comprobamos si el reproductor que acaba de cargarse es el de la etapa actual
+        if (
+            (currentStage === 1 && event.target.getIframe().id === 'youtube-player-1') ||
+            (currentStage === 15 && event.target.getIframe().id === 'youtube-player-2')
+        ) {
+            // Un pequeño retraso para asegurar que el DOM ha sido actualizado
+            setTimeout(() => {
+                event.target.playVideo();
+            }, 100);
+        }
+    }
+
+    const showStage = (stageNumber) => {
+        document.querySelectorAll('.page-content').forEach(page => {
+            // Antes de ocultar la página, detenemos el video si lo tiene
+            if (page.classList.contains('active')) {
+                const videoIframe = page.querySelector('iframe');
+                if (videoIframe && videoIframe.id in players) {
+                    try {
+                        players[videoIframe.id].stopVideo();
+                    } catch (e) {
+                        // Ignorar si el reproductor aún no se ha cargado
                     }
                 }
-                page.classList.remove('active');
-            });
-
-            const newStage = document.getElementById(`stage-${stageNumber}`);
-            if (newStage) {
-                newStage.classList.add('active');
-                
-                // Si la nueva etapa tiene un video, lo reproducimos automáticamente con un pequeño retraso
-                const videoIframe = newStage.querySelector('iframe');
-                if (videoIframe && videoIframe.src.includes('youtube.com')) {
-                    // Agregamos un retraso de 200ms para asegurar que el audio se cargue correctamente
-                    setTimeout(() => {
-                        const videoSrc = videoIframe.src;
-                        // Solo si no está ya reproduciéndose
-                        if (!videoSrc.includes('autoplay=1')) {
-                            // Usamos el operador ternario para agregar el parámetro correctamente
-                            videoIframe.src = videoSrc.includes('?') ? videoSrc + '&autoplay=1' : videoSrc + '?autoplay=1';
-                        }
-                    }, 200); // 200 milisegundos de retraso
-                }
-
-                // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        };
-
-        // Función para mostrar mensajes en un cuadro de diálogo
-        const showMessageBox = (message) => {
-            document.getElementById('message-text').innerText = message;
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('message-box').style.display = 'block';
-        };
-
-        const closeMessageBox = () => {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('message-box').style.display = 'none';
-        };
-
-        // Escuchador de eventos para el botón "Comenzar la Aventura"
-        document.getElementById('start-button').addEventListener('click', () => {
-            goToStage(1);
+            page.classList.remove('active');
         });
 
-        // Escuchador de eventos para el botón de la Etapa 2
-        document.getElementById('answer-button').addEventListener('click', () => {
-            const answer = document.getElementById('answer-input').value.toLowerCase().trim();
-            const feedback = document.getElementById('feedback');
-            const correctAnswers = ['tablet', 'la tablet', 'computadora', 'la computadora', 'laptop', 'la laptop', 'ordenador', 'el ordenador'];
+        const newStage = document.getElementById(`stage-${stageNumber}`);
+        if (newStage) {
+            newStage.classList.add('active');
             
-            if (correctAnswers.includes(answer)) {
-                feedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡El Guardián te deja pasar!</span>';
-                setTimeout(() => goToStage(3), 1500); // Avanza a la siguiente etapa después de un segundo y medio
-            } else {
-                feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
-                showMessageBox('¡Respuesta incorrecta! Inténtalo de nuevo.');
+            // Si la nueva etapa tiene un video, lo reproducimos
+            const videoIframe = newStage.querySelector('iframe');
+            if (videoIframe && videoIframe.id in players) {
+                players[videoIframe.id].playVideo();
             }
-        });
 
-        // Escuchador de eventos para el botón de la Etapa 9
-        document.getElementById('medallas-button').addEventListener('click', () => {
-            const medallas = document.getElementById('medallas-input').value;
-            const medallasFeedback = document.getElementById('medallas-feedback');
-            const correctAnswer = 38; // Número correcto de medallas
-            if (parseInt(medallas) === correctAnswer) {
-                medallasFeedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡Trabajo bien hecho!</span>';
-                setTimeout(() => goToStage(10), 1500);
-            } else {
-                medallasFeedback.textContent = 'Respuesta incorrecta. Cuenta de nuevo.';
-                showMessageBox('¡Respuesta incorrecta! Cuenta de nuevo.');
-            }
-        });
+            // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+    
+    // Función para mostrar mensajes en un cuadro de diálogo
+    const showMessageBox = (message) => {
+        document.getElementById('message-text').innerText = message;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('message-box').style.display = 'block';
+    };
 
-        // Escuchador de eventos para el botón de la Etapa 13
-        document.getElementById('cofre-button').addEventListener('click', () => {
-            const cofreInput = document.getElementById('cofre-input').value;
-            const cofreFeedback = document.getElementById('cofre-feedback');
-            const correctCode = 301; // (100 * 3) + 366 - 365 = 300 + 1 = 301
-            if (parseInt(cofreInput) === correctCode) {
-                cofreFeedback.innerHTML = '<span class="text-green-400">¡BAM! El candado se abrió. ¡Misión completada!</span>';
-                setTimeout(() => goToStage(14), 1500);
-            } else {
-                cofreFeedback.textContent = 'Combinación incorrecta. Vuelve a calcular.';
-                showMessageBox('¡Combinación incorrecta! Vuelve a calcular.');
-            }
-        });
+    const closeMessageBox = () => {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('message-box').style.display = 'none';
+    };
 
-        // Hacemos que las funciones sean accesibles globalmente para los botones onclick
-        window.goToNextStage = () => {
-            const newStage = currentStage + 1;
-            window.location.href = `?stage=${newStage}`;
-        };
-        window.goToStage = (stage) => {
-            window.location.href = `?stage=${stage}`;
-        };
-        window.closeMessageBox = closeMessageBox;
-
-        // Mostrar la etapa inicial
-        showStage(currentStage);
+    // Escuchador de eventos para el botón "Comenzar la Aventura"
+    document.getElementById('start-button').addEventListener('click', () => {
+        goToStage(1);
     });
+
+    // Escuchador de eventos para el botón de la Etapa 2
+    document.getElementById('answer-button').addEventListener('click', () => {
+        const answer = document.getElementById('answer-input').value.toLowerCase().trim();
+        const feedback = document.getElementById('feedback');
+        const correctAnswers = ['tablet', 'la tablet', 'computadora', 'la computadora', 'laptop', 'la laptop', 'ordenador', 'el ordenador'];
+        
+        if (correctAnswers.includes(answer)) {
+            feedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡El Guardián te deja pasar!</span>';
+            setTimeout(() => goToStage(3), 1500); // Avanza a la siguiente etapa después de un segundo y medio
+        } else {
+            feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
+            showMessageBox('¡Respuesta incorrecta! Inténtalo de nuevo.');
+        }
+    });
+
+    // Escuchador de eventos para el botón de la Etapa 9
+    document.getElementById('medallas-button').addEventListener('click', () => {
+        const medallas = document.getElementById('medallas-input').value;
+        const medallasFeedback = document.getElementById('medallas-feedback');
+        const correctAnswer = 38; // Número correcto de medallas
+        if (parseInt(medallas) === correctAnswer) {
+            medallasFeedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡Trabajo bien hecho!</span>';
+            setTimeout(() => goToStage(10), 1500);
+        } else {
+            medallasFeedback.textContent = 'Respuesta incorrecta. Cuenta de nuevo.';
+            showMessageBox('¡Respuesta incorrecta! Cuenta de nuevo.');
+        }
+    });
+
+    // Escuchador de eventos para el botón de la Etapa 13
+    document.getElementById('cofre-button').addEventListener('click', () => {
+        const cofreInput = document.getElementById('cofre-input').value;
+        const cofreFeedback = document.getElementById('cofre-feedback');
+        const correctCode = 301; // (100 * 3) + 366 - 365 = 300 + 1 = 301
+        if (parseInt(cofreInput) === correctCode) {
+            cofreFeedback.innerHTML = '<span class="text-green-400">¡BAM! El candado se abrió. ¡Misión completada!</span>';
+            setTimeout(() => goToStage(14), 1500);
+        } else {
+            cofreFeedback.textContent = 'Combinación incorrecta. Vuelve a calcular.';
+            showMessageBox('¡Combinación incorrecta! Vuelve a calcular.');
+        }
+    });
+
+    // Hacemos que las funciones sean accesibles globalmente para los botones onclick
+    window.goToNextStage = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
+        const newStage = currentStage + 1;
+        window.location.href = `?stage=${newStage}`;
+    };
+    window.goToStage = (stage) => {
+        window.location.href = `?stage=${stage}`;
+    };
+    window.closeMessageBox = closeMessageBox;
+
+    // Carga el script de la API de YouTube si aún no se ha cargado
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
 </script>
 
 </body>
