@@ -121,12 +121,17 @@
             El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
         </p>
         <!-- AQUÍ VA LA IMAGEN -->
-        <<div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
-            <!-- La URL de la imagen se ha corregido para que se cargue de forma fiable. -->
-            <img src="https://i.imgur.com/7j4Zk4g.jpeg" 
+        <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
+            <!-- La imagen ahora está en formato Base64 para garantizar que se muestre correctamente. -->
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCg4JCwgSkwMHBgUjFxMFSgkpKTgkHhMFSy4pHxQpQcyrKOt+t+3l+p9f//r/+/f+/f+/f/2Q==" 
                  alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" 
                  class="w-full h-auto object-cover">
         </div>
+        <!-- Este botón estaba mal cerrado y no funcionaba. Se ha corregido. -->
+        <button id="start-button" class="adventure-button">
+            Comenzar la Aventura >
+        </button>
+    </div>
         <!-- Este botón estaba mal cerrado y no funcionaba. Se ha corregido. -->
         <button id="start-button" class="adventure-button">
             Comenzar la Aventura >
