@@ -183,7 +183,7 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="video-bienvenida" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=0" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="video-bienvenida" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -450,7 +450,7 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="video-sorpresa" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=0" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="video-sorpresa" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -474,7 +474,7 @@
                 if (page.classList.contains('active')) {
                     const videoIframe = page.querySelector('iframe');
                     if (videoIframe) {
-                        const originalSrc = videoIframe.src.replace('autoplay=1', 'autoplay=0');
+                        const originalSrc = videoIframe.src.replace('?autoplay=1', '');
                         videoIframe.src = originalSrc;
                     }
                 }
@@ -485,14 +485,18 @@
             if (newStage) {
                 newStage.classList.add('active');
                 
-                // Si la nueva etapa tiene un video, lo reproducimos automáticamente
+                // Si la nueva etapa tiene un video, lo reproducimos automáticamente con un pequeño retraso
                 const videoIframe = newStage.querySelector('iframe');
-                if (videoIframe) {
-                    const videoSrc = videoIframe.src;
-                    // Solo si no está ya reproduciéndose
-                    if (!videoSrc.includes('autoplay=1')) {
-                        videoIframe.src = videoSrc.replace('autoplay=0', 'autoplay=1');
-                    }
+                if (videoIframe && videoIframe.src.includes('youtube.com')) {
+                    // Agregamos un retraso de 200ms para asegurar que el audio se cargue correctamente
+                    setTimeout(() => {
+                        const videoSrc = videoIframe.src;
+                        // Solo si no está ya reproduciéndose
+                        if (!videoSrc.includes('autoplay=1')) {
+                            // Usamos el operador ternario para agregar el parámetro correctamente
+                            videoIframe.src = videoSrc.includes('?') ? videoSrc + '&autoplay=1' : videoSrc + '?autoplay=1';
+                        }
+                    }, 200); // 200 milisegundos de retraso
                 }
 
                 // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
