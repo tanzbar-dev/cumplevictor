@@ -140,7 +140,7 @@
 <div class="overlay" id="overlay"></div>
 <div class="message-box text-center" id="message-box">
     <p id="message-text" class="text-xl mb-6"></p>
-    <button onclick="closeMessageBox()" class="adventure-button">Cerrar</button>
+    <button class="adventure-button" onclick="closeMessageBox()">Cerrar</button>
 </div>
 
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
@@ -157,7 +157,7 @@
                     alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" 
                     class="w-full h-auto object-cover">
             </div>
-            <button id="start-button" class="adventure-button" onclick="goToStage(1)">
+            <button class="adventure-button" data-next-stage="1">
                 Comenzar la Aventura
             </button>
         </div>
@@ -174,7 +174,7 @@
                 Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
                 ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(2)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="2">Siguiente</button>
         </div>
     </div>
 
@@ -200,7 +200,7 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(4)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="4">Siguiente</button>
         </div>
     </div>
 
@@ -211,7 +211,7 @@
             <p class="text-base md:text-lg mb-4">
                 Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(5)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="5">Siguiente</button>
         </div>
     </div>
 
@@ -229,7 +229,7 @@
                 ve a donde juegas con banana y tu papá <br>
                 y pregunta en recepción que seguirá!
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(6)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="6">Siguiente</button>
         </div>
     </div>
 
@@ -240,7 +240,7 @@
             <p class="text-base md:text-lg mb-4">
                 "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(7)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="7">Siguiente</button>
         </div>
     </div>
 
@@ -251,7 +251,7 @@
             <p class="text-base md:text-lg mb-4">
                 Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(8)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="8">Siguiente</button>
         </div>
     </div>
 
@@ -262,7 +262,7 @@
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(9)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="9">Siguiente</button>
         </div>
     </div>
 
@@ -288,7 +288,7 @@
             <p class="text-base md:text-lg mb-4">
                 Ve a la parte de atrás y busca tu recompensa!
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(11)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="11">Siguiente</button>
         </div>
     </div>
 
@@ -299,7 +299,7 @@
             <p class="text-base md:text-lg mb-4">
                 regrese a la base de exploradores inmediatamente!!
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(12)">Siguiente</button>
+            <button class="adventure-button mt-8" data-next-stage="12">Siguiente</button>
         </div>
     </div>
 
@@ -323,7 +323,7 @@
             <p class="text-base md:text-lg mb-4">
                 "¿Cuál crees que es la combinación secreta?"
             </p>
-            <button class="adventure-button bg-green-600 hover:bg-green-700 mt-8" onclick="goToStage(13)">
+            <button class="adventure-button bg-green-600 hover:bg-green-700 mt-8" data-next-stage="13">
                 ¡Resolver el acertijo!
             </button>
         </div>
@@ -351,7 +351,7 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Lo lograste! El cofre se ha abierto. ¡Feliz cumpleaños, Víctor! ¡Has completado esta aventura con éxito! Ahora, ¡a disfrutar de tu recompensa!
             </p>
-            <button class="adventure-button mt-8" onclick="goToStage(15)">Finalizar</button>
+            <button class="adventure-button mt-8" data-next-stage="15">Finalizar</button>
         </div>
     </div>
 
@@ -422,53 +422,9 @@
         }
     }
 
-    // Lógica para el Reto de la Tablet (Etapa 2)
-    document.getElementById('answer-button').addEventListener('click', function() {
-        const answer = document.getElementById('answer-input').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback');
-        if (answer === "tablet" || answer === "la tablet") {
-            feedback.innerText = "";
-            goToStage(3); // Pasar a la siguiente etapa
-        } else {
-            feedback.innerText = "¡Respuesta incorrecta! Intenta de nuevo.";
-        }
-    });
-
-    // CORRECCIÓN CLAVE: Lógica para el Reto de las Medallas (Etapa 9)
-    // El problema estaba en el tipo de dato, ahora parseamos el valor a entero.
-    document.getElementById('medallas-button').addEventListener('click', function() {
-        const answer = document.getElementById('medallas-input').value.trim();
-        const feedback = document.getElementById('medallas-feedback');
-        // Convertimos la entrada a un número para una comparación estricta
-        const numericAnswer = parseInt(answer, 10);
-        
-        // La respuesta correcta es 38
-        if (numericAnswer === 38) {
-            feedback.innerText = "";
-            goToStage(10); // Pasar a la siguiente etapa
-        } else {
-            feedback.innerText = "¡Número incorrecto! El tesoro no se desbloqueará así de fácil.";
-        }
-    });
-
-    // Lógica para el Reto del Cofre (Etapa 13)
-    document.getElementById('cofre-button').addEventListener('click', function() {
-        const answer = document.getElementById('cofre-input').value.trim();
-        const feedback = document.getElementById('cofre-feedback');
-        const numericAnswer = parseInt(answer, 10);
-        
-        // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
-        if (numericAnswer === 301) {
-            feedback.innerText = "";
-            goToStage(14); // Pasar a la etapa final
-        } else {
-            feedback.innerText = "¡La combinación es incorrecta! Intenta de nuevo.";
-        }
-    });
-
-    // CORRECCIÓN CLAVE: Nueva lógica de inicialización en window.onload
-    // Ahora, el script busca y va directamente a la etapa solicitada, sin pasar por la etapa 0.
-    window.onload = function() {
+    // Manejo de todos los eventos de botones y lógica de inicio
+    document.addEventListener('DOMContentLoaded', () => {
+        // Inicialización de la página según el parámetro de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const stageParam = urlParams.get('stage');
         let initialStage = 0;
@@ -484,8 +440,62 @@
         }
         
         goToStage(initialStage);
-    };
 
+        // Lógica para el Reto de la Tablet (Etapa 2)
+        document.getElementById('answer-button').addEventListener('click', () => {
+            const answer = document.getElementById('answer-input').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback');
+            if (answer === "tablet" || answer === "la tablet") {
+                feedback.innerText = "";
+                goToStage(3); // Pasar a la siguiente etapa
+            } else {
+                feedback.innerText = "¡Respuesta incorrecta! Intenta de nuevo.";
+            }
+        });
+
+        // Lógica para el Reto de las Medallas (Etapa 9)
+        document.getElementById('medallas-button').addEventListener('click', () => {
+            const answer = document.getElementById('medallas-input').value.trim();
+            const feedback = document.getElementById('medallas-feedback');
+            // Convertimos la entrada a un número para una comparación estricta
+            const numericAnswer = parseInt(answer, 10);
+            
+            // La respuesta correcta es 38
+            if (numericAnswer === 38) {
+                feedback.innerText = "";
+                goToStage(10); // Pasar a la siguiente etapa
+            } else {
+                feedback.innerText = "¡Número incorrecto! El tesoro no se desbloqueará así de fácil.";
+            }
+        });
+
+        // Lógica para el Reto del Cofre (Etapa 13)
+        document.getElementById('cofre-button').addEventListener('click', () => {
+            const answer = document.getElementById('cofre-input').value.trim();
+            const feedback = document.getElementById('cofre-feedback');
+            const numericAnswer = parseInt(answer, 10);
+            
+            // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
+            if (numericAnswer === 301) {
+                feedback.innerText = "";
+                goToStage(14); // Pasar a la etapa final
+            } else {
+                feedback.innerText = "¡La combinación es incorrecta! Intenta de nuevo.";
+            }
+        });
+
+        // Nuevo enfoque: Delegación de eventos para los botones de "Siguiente"
+        // Utilizamos el atributo 'data-next-stage' para saber a qué etapa ir
+        document.body.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.matches('[data-next-stage]')) {
+                const nextStage = parseInt(target.dataset.nextStage, 10);
+                if (!isNaN(nextStage)) {
+                    goToStage(nextStage);
+                }
+            }
+        });
+    });
 </script>
 
 </body>
