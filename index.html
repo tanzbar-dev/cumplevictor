@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,7 @@
             min-height: 100vh;
             padding: 1rem;
         }
+        /* El contenedor principal ahora no tiene un ancho máximo fijo */
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -145,11 +146,11 @@
     <button onclick="closeMessageBox()" class="adventure-button">Cerrar</button>
 </div>
 
-<!-- El contenedor principal ahora tiene un ancho máximo para centrarse en pantallas grandes, pero sigue siendo responsivo -->
-<div class="container-card w-full max-w-4xl mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
+<!-- El contenedor principal ahora tiene un ancho completo y el contenido de texto se limita dentro de él. -->
+<div class="container-card w-full mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
-    <div id="stage-0" class="page-content active">
+    <div id="stage-0" class="page-content active w-full max-w-4xl mx-auto">
         <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
         <p class="text-lg md:text-xl mb-8">
             El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
@@ -166,9 +167,9 @@
     </div>
 
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
-    <div id="stage-1" class="page-content">
+    <div id="stage-1" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
-        <!-- Contenedor del video con ancho máximo para que se vea más grande -->
+        <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full mx-auto rounded-xl overflow-hidden mb-8">
             <iframe id="video-bienvenida" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=0" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
@@ -187,7 +188,7 @@
     </div>
 
     <!-- Etapa 2: Reto de la Tablet (Con formulario de respuesta) -->
-    <div id="stage-2" class="page-content">
+    <div id="stage-2" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">El Enigma del Guardián Rectangular</h2>
         <p class="text-base md:text-lg mb-4">
             "Soy rectangular, pero no soy pizza. Tengo teclas, pero no soy piano. ¿Quién soy?"
@@ -203,7 +204,7 @@
     </div>
 
     <!-- Etapa 3: Pista para encontrar la tablet -->
-    <div id="stage-3" class="page-content">
+    <div id="stage-3" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Acertaste!</h2>
         <p class="text-base md:text-lg mb-4">
             ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
@@ -219,7 +220,7 @@
     </div>
 
     <!-- Etapa 4: Pista de la Playera Moschino (sin botón) -->
-    <div id="stage-4" class="page-content">
+    <div id="stage-4" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡¡Pero te peinas!!</h2>
         <p class="text-base md:text-lg mb-4">
             Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
@@ -235,7 +236,7 @@
     </div>
 
     <!-- Etapa 5: Acertijo del Pádel -->
-    <div id="stage-5" class="page-content">
+    <div id="stage-5" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¿Eres lo suficientemente hábil?</h2>
         <p class="text-base md:text-lg mb-4">
             El siguiente acertijo te llevará a tu siguiente aventura: <br><br>
@@ -257,7 +258,7 @@
     </div>
 
     <!-- Etapa 6: Reto del Club de Pádel (sin video) -->
-    <div id="stage-6" class="page-content">
+    <div id="stage-6" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Reto: Club de Pádel</h2>
         <p class="text-base md:text-lg mb-4">
             "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
@@ -273,7 +274,7 @@
     </div>
 
     <!-- Etapa 7: Mensaje de Cibó (sin botón) -->
-    <div id="stage-7" class="page-content">
+    <div id="stage-7" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Vas muy bien!</h2>
         <p class="text-base md:text-lg mb-4">
             Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
@@ -288,7 +289,7 @@
     </div>
 
     <!-- Etapa 8: Pista para La Joye (sin video) -->
-    <div id="stage-8" class="page-content">
+    <div id="stage-8" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡La aventura no ha terminado!</h2>
         <p class="text-base md:text-lg mb-4">
             "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
@@ -299,7 +300,7 @@
     </div>
 
     <!-- Etapa 9: Reto de las medallas en La Joye -->
-    <div id="stage-9" class="page-content">
+    <div id="stage-9" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aquí no basta con verse bien!</h2>
         <p class="text-base md:text-lg mb-4">
             Aquí no basta con ser inteligente o verse bien, hay que trabajar para ganarse las cosas!! Tu siguiente reto es contar cuantas medallas hay en la joye si aciertas puedes avanzar!
@@ -315,7 +316,7 @@
     </div>
 
     <!-- Etapa 10: Pista para la recompensa de La Joye -->
-    <div id="stage-10" class="page-content">
+    <div id="stage-10" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Respuesta correcta!</h2>
         <p class="text-base md:text-lg mb-4">
             Ve a la parte de atrás y busca tu recompensa!
@@ -331,7 +332,7 @@
     </div>
 
     <!-- Etapa 11: Mensaje para regresar a la casa -->
-    <div id="stage-11" class="page-content">
+    <div id="stage-11" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Explorador Víctor necesitamos su ayuda!</h2>
         <p class="text-base md:text-lg mb-4">
             regrese a la base de exploradores inmediatamente!!
@@ -346,7 +347,7 @@
     </div>
 
     <!-- Etapa 12: Acertijo final del cofre del tesoro -->
-    <div id="stage-12" class="page-content">
+    <div id="stage-12" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡El Secreto del Cofre!</h2>
         <p class="text-base md:text-lg mb-4">
             "Felicitaciones nuevamente no solo por tu cumpleaños sino por haber llegado hasta aquí! Sin embargo necesito tu ayuda! He encontrado un cofre del tesoro muy antiguo en una cueva misteriosa, pero tiene un candado con combinación numérica de 3 dígitos y no logro resolverlo."
@@ -373,7 +374,7 @@
     </div>
 
     <!-- Etapa 13: Ingresar la combinación del cofre -->
-    <div id="stage-13" class="page-content">
+    <div id="stage-13" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">El Cofre Misterioso</h2>
         <p class="text-base md:text-lg mb-4">
             Ahora que tienes el acertijo, ¿cuál es el número de 3 dígitos que abre el candado?
@@ -389,7 +390,7 @@
     </div>
 
     <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
-    <div id="stage-14" class="page-content">
+    <div id="stage-14" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Felicitaciones, Explorador!</h2>
         <p class="text-base md:text-lg mb-4">
             espero que hayas tenido una busqueda del tesoro muy divertida, que te hayan gustado tus regalos y que hayas aprendido lecciones valiosas
@@ -403,9 +404,9 @@
     </div>
 
     <!-- Etapa 15: Sorpresa de Bob Esponja -->
-    <div id="stage-15" class="page-content">
+    <div id="stage-15" class="page-content w-full max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
-        <!-- Contenedor del video con ancho máximo para que se vea más grande -->
+        <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full mx-auto rounded-xl overflow-hidden mb-8">
             <iframe id="video-sorpresa" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=0" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
