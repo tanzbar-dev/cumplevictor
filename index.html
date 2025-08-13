@@ -60,7 +60,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             /* Centramos el video dentro de su contenedor */
             width: 100%;
-            max-width: 60rem; /* Limita el ancho del video para que no sea demasiado grande en escritorio */
             margin: 0 auto;
         }
         .video-responsive iframe {
@@ -459,172 +458,107 @@
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
-                feliz cumpleaños!!!
+                Feliz cumpleaños Víctor!
+            </p>
+            <p class="text-sm text-gray-400 mt-8">
+                <!-- NOTA: Aquí se termina la aventura. -->
             </p>
         </div>
     </div>
 
-</div>
-
-<!-- Incluimos la API de YouTube -->
-<script src="https://www.youtube.com/iframe_api"></script>
+</div> <!-- Fin del contenedor principal -->
 
 <script>
-    // Variables para almacenar los objetos de los reproductores de YouTube
-    let players = {};
-
-    // Esta función es llamada automáticamente por la API de YouTube cuando está lista
-    function onYouTubeIframeAPIReady() {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Obtenemos el parámetro de la URL
         const urlParams = new URLSearchParams(window.location.search);
-        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
+        let currentStage = parseInt(urlParams.get('stage')) || 0;
+        let lastStage = 15;
+
+        // Función para mostrar un mensaje personalizado
+        function showMessageBox(message) {
+            document.getElementById('message-text').innerText = message;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('message-box').style.display = 'block';
+        }
+
+        // Función para cerrar el cuadro de mensaje
+        window.closeMessageBox = function() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('message-box').style.display = 'none';
+        }
+
+        // Navega a una etapa específica
+        window.goToStage = function(stageNumber) {
+            const currentStageElement = document.getElementById(`stage-${currentStage}`);
+            if (currentStageElement) {
+                currentStageElement.classList.remove('active');
+            }
+            currentStage = stageNumber;
+            const nextStageElement = document.getElementById(`stage-${currentStage}`);
+            if (nextStageElement) {
+                nextStageElement.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
         
-        // Creamos los reproductores una vez que la API está lista
-        players['youtube-player-1'] = new YT.Player('youtube-player-1', {
-            events: {
-                'onReady': onPlayerReady
+        // Navega a la siguiente etapa
+        window.goToNextStage = function() {
+            if (currentStage < lastStage) {
+                goToStage(currentStage + 1);
+            }
+        }
+
+        // Configuración inicial de la página
+        goToStage(currentStage);
+
+        // Agregamos listeners a los botones
+        document.getElementById('start-button').addEventListener('click', () => {
+            goToNextStage();
+        });
+
+        document.getElementById('answer-button').addEventListener('click', () => {
+            const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
+            const feedback = document.getElementById('feedback');
+            if (answerInput === 'computadora' || answerInput === 'el monitor' || answerInput === 'el teclado' || answerInput === 'la computadora' || answerInput === 'la pc' || answerInput === 'pc' || answerInput === 'monitor' || answerInput === 'teclado') {
+                showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
+                goToStage(3);
+                feedback.innerText = '';
+            } else {
+                showMessageBox('Incorrecto. Inténtalo de nuevo.');
+                feedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
         });
 
-        players['youtube-player-2'] = new YT.Player('youtube-player-2', {
-            events: {
-                'onReady': onPlayerReady
+        document.getElementById('medallas-button').addEventListener('click', () => {
+            const medallasInput = document.getElementById('medallas-input').value.trim();
+            const medallasFeedback = document.getElementById('medallas-feedback');
+            // Supongamos que la respuesta correcta es '10'
+            if (medallasInput === '10') {
+                showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.');
+                goToStage(10);
+                medallasFeedback.innerText = '';
+            } else {
+                showMessageBox('Incorrecto. Intenta contar de nuevo.');
+                medallasFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
         });
 
-        // Mostramos la etapa inicial
-        showStage(currentStage);
-    }
-    
-    // Esta función se llama cuando un reproductor está listo
-    function onPlayerReady(event) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
-
-        // Comprobamos si el reproductor que acaba de cargarse es el de la etapa actual
-        if (
-            (currentStage === 1 && event.target.getIframe().id === 'youtube-player-1') ||
-            (currentStage === 15 && event.target.getIframe().id === 'youtube-player-2')
-        ) {
-            // Un pequeño retraso para asegurar que el DOM ha sido actualizado
-            setTimeout(() => {
-                event.target.playVideo();
-            }, 100);
-        }
-    }
-
-    const showStage = (stageNumber) => {
-        document.querySelectorAll('.page-content').forEach(page => {
-            // Antes de ocultar la página, detenemos el video si lo tiene
-            if (page.classList.contains('active')) {
-                const videoIframe = page.querySelector('iframe');
-                if (videoIframe && videoIframe.id in players) {
-                    try {
-                        players[videoIframe.id].stopVideo();
-                    } catch (e) {
-                        // Ignorar si el reproductor aún no se ha cargado
-                    }
-                }
+        document.getElementById('cofre-button').addEventListener('click', () => {
+            const cofreInput = document.getElementById('cofre-input').value.trim();
+            const cofreFeedback = document.getElementById('cofre-feedback');
+            // Calcular la respuesta correcta: (100 * 3) + 366 - 365 = 300 + 1 = 301
+            if (cofreInput === '301') {
+                showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
+                goToStage(14);
+                cofreFeedback.innerText = '';
+            } else {
+                showMessageBox('Incorrecto. Vuelve a calcular el acertijo.');
+                cofreFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
-            page.classList.remove('active');
         });
 
-        const newStage = document.getElementById(`stage-${stageNumber}`);
-        if (newStage) {
-            newStage.classList.add('active');
-            
-            // Si la nueva etapa tiene un video, lo reproducimos
-            const videoIframe = newStage.querySelector('iframe');
-            if (videoIframe && videoIframe.id in players) {
-                // Verificamos que el iframe exista en la página
-                if (document.body.contains(videoIframe)) {
-                    players[videoIframe.id].playVideo();
-                }
-            }
-
-            // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    };
-    
-    // Función para mostrar mensajes en un cuadro de diálogo
-    const showMessageBox = (message) => {
-        document.getElementById('message-text').innerText = message;
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('message-box').style.display = 'block';
-    };
-
-    const closeMessageBox = () => {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('message-box').style.display = 'none';
-    };
-
-    // Escuchador de eventos para el botón "Comenzar la Aventura"
-    document.getElementById('start-button').addEventListener('click', () => {
-        goToStage(1);
     });
-
-    // Escuchador de eventos para el botón de la Etapa 2
-    document.getElementById('answer-button').addEventListener('click', () => {
-        const answer = document.getElementById('answer-input').value.toLowerCase().trim();
-        const feedback = document.getElementById('feedback');
-        const correctAnswers = ['tablet', 'la tablet', 'computadora', 'la computadora', 'laptop', 'la laptop', 'ordenador', 'el ordenador'];
-        
-        if (correctAnswers.includes(answer)) {
-            feedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡El Guardián te deja pasar!</span>';
-            setTimeout(() => goToStage(3), 1500); // Avanza a la siguiente etapa después de un segundo y medio
-        } else {
-            feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
-            showMessageBox('¡Respuesta incorrecta! Inténtalo de nuevo.');
-        }
-    });
-
-    // Escuchador de eventos para el botón de la Etapa 9
-    document.getElementById('medallas-button').addEventListener('click', () => {
-        const medallas = document.getElementById('medallas-input').value;
-        const medallasFeedback = document.getElementById('medallas-feedback');
-        const correctAnswer = 38; // Número correcto de medallas
-        if (parseInt(medallas) === correctAnswer) {
-            medallasFeedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡Trabajo bien hecho!</span>';
-            setTimeout(() => goToStage(10), 1500);
-        } else {
-            medallasFeedback.textContent = 'Respuesta incorrecta. Cuenta de nuevo.';
-            showMessageBox('¡Respuesta incorrecta! Cuenta de nuevo.');
-        }
-    });
-
-    // Escuchador de eventos para el botón de la Etapa 13
-    document.getElementById('cofre-button').addEventListener('click', () => {
-        const cofreInput = document.getElementById('cofre-input').value;
-        const cofreFeedback = document.getElementById('cofre-feedback');
-        const correctCode = 301; // (100 * 3) + 366 - 365 = 300 + 1 = 301
-        if (parseInt(cofreInput) === correctCode) {
-            cofreFeedback.innerHTML = '<span class="text-green-400">¡BAM! El candado se abrió. ¡Misión completada!</span>';
-            setTimeout(() => goToStage(14), 1500);
-        } else {
-            cofreFeedback.textContent = 'Combinación incorrecta. Vuelve a calcular.';
-            showMessageBox('¡Combinación incorrecta! Vuelve a calcular.');
-        }
-    });
-
-    // Hacemos que las funciones sean accesibles globalmente para los botones onclick
-    window.goToNextStage = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
-        const newStage = currentStage + 1;
-        window.location.href = `?stage=${newStage}`;
-    };
-    window.goToStage = (stage) => {
-        window.location.href = `?stage=${stage}`;
-    };
-    window.closeMessageBox = closeMessageBox;
-
-    // Carga el script de la API de YouTube si aún no se ha cargado
-    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
 </script>
 
 </body>
