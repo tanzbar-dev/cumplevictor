@@ -344,8 +344,11 @@
         </div>
     </div>
 
-    <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
-    <div id="stage-14" class="page-content">
+    <!-- Etapa 14: Video de Felicitaciones del narrador -->
+    <div id="stage-14" class="page-content video-page">
+        <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
+            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&rel=0" title="Video de felicitaciones" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Tesoro Desbloqueado!</h2>
             <p class="text-base md:text-lg mb-4">
@@ -412,12 +415,19 @@
         // Desplazar la vista al principio de la página
         window.scrollTo(0, 0);
 
-        // Lógica específica para videos
+        // Lógica específica para videos, para que se reproduzcan al entrar
         if (currentStage === 1) {
             const videoPlayer = document.getElementById('youtube-player-1');
             if (videoPlayer) {
                 // Reinicia el video para que comience automáticamente si se regresa a esta etapa
-                videoPlayer.src = videoPlayer.src;
+                videoPlayer.src = videoPlayer.src.replace('?autoplay=0', '') + '?autoplay=1&mute=0&rel=0';
+            }
+        }
+        if (currentStage === 14) {
+            const videoPlayer = document.getElementById('youtube-player-2');
+            if (videoPlayer) {
+                // Reinicia el video para que comience automáticamente si se regresa a esta etapa
+                videoPlayer.src = videoPlayer.src.replace('?autoplay=0', '') + '?autoplay=1&mute=0&rel=0';
             }
         }
     }
@@ -478,7 +488,8 @@
             // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
             if (numericAnswer === 301) {
                 feedback.innerText = "";
-                goToStage(14); // Pasar a la etapa final
+                // La respuesta correcta lleva a la etapa del segundo video
+                goToStage(14); 
             } else {
                 feedback.innerText = "¡La combinación es incorrecta! Intenta de nuevo.";
             }
