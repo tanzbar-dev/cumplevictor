@@ -145,7 +145,7 @@
 
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
 
-    <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
+    <!-- Etapa 0: Pantalla de Bienvenida -->
     <div id="stage-0" class="page-content active">
         <div class="content-wrapper">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
@@ -157,6 +157,7 @@
                     alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" 
                     class="w-full h-auto object-cover">
             </div>
+            <!-- Botón para iniciar la aventura, lleva a la primera etapa -->
             <button class="adventure-button" data-next-stage="1">
                 Comenzar la Aventura
             </button>
@@ -165,7 +166,6 @@
 
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
     <div id="stage-1" class="page-content video-page">
-        <!-- Contenedor del video que ahora ocupa todo el ancho y tiene la relación de aspecto correcta -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
             <iframe id="youtube-player-1" width="100%" height="100%" src="" title="Video de bienvenida con temática de aventura" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
@@ -175,6 +175,7 @@
                 Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
                 ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
             </p>
+            <!-- Este botón se deja porque la pista ya fue dada. La acción del botón no es la pista en sí. -->
             <button class="adventure-button mt-8" data-next-stage="2">Siguiente</button>
         </div>
     </div>
@@ -201,18 +202,19 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
             </p>
+            <!-- Este botón se mantiene porque confirma la acción virtual, no la física -->
             <button class="adventure-button mt-8" data-next-stage="4">Siguiente</button>
         </div>
     </div>
 
-    <!-- Etapa 4: Pista de la Playera Moschino (sin botón) -->
+    <!-- Etapa 4: Pista de la Playera Moschino (Confirma la acción de vestirse) -->
     <div id="stage-4" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡¡Pero te peinas!!</h2>
             <p class="text-base md:text-lg mb-4">
                 Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
             </p>
-            <!-- El botón ahora es una confirmación de la acción física, no un simple "Siguiente" -->
+            <!-- Este botón se mantiene porque confirma la acción física, no es una pista -->
             <button class="adventure-button mt-8" data-next-stage="5">
                 Ya me vestí
             </button>
@@ -233,53 +235,47 @@
                 ve a donde juegas con banana y tu papá <br>
                 y pregunta en recepción que seguirá!
             </p>
-            <!-- El botón ahora es una confirmación de la acción física -->
-            <button class="adventure-button mt-8" data-next-stage="6">
-                Ya voy al pádel
-            </button>
+            <!-- Se elimina el botón "Ya voy al pádel" para que el usuario tenga que resolver el acertijo y moverse físicamente -->
         </div>
     </div>
 
-    <!-- Etapa 6: Reto del Club de Pádel (sin video) -->
+    <!-- Etapa 6: Reto del Club de Pádel -->
     <div id="stage-6" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">Reto: Club de Pádel</h2>
             <p class="text-base md:text-lg mb-4">
                 "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
             </p>
+            <!-- Este botón se mantiene porque el reto es dentro de esta etapa (físico pero la validación podría ser virtual) -->
             <button class="adventure-button mt-8" data-next-stage="7">
                 ¡Reto Aceptado!
             </button>
         </div>
     </div>
 
-    <!-- Etapa 7: Mensaje de Cibó (sin botón) -->
+    <!-- Etapa 7: Mensaje de Cibó -->
     <div id="stage-7" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Vas muy bien!</h2>
             <p class="text-base md:text-lg mb-4">
                 Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
             </p>
-            <button class="adventure-button mt-8" data-next-stage="8">
-                Ya estoy listo para continuar
-            </button>
+            <!-- Se elimina el botón "Ya estoy listo para continuar" para que el usuario tenga que ir a Cibó y buscar el siguiente QR -->
         </div>
     </div>
 
-    <!-- Etapa 8: Pista para La Joye (sin video) -->
+    <!-- Etapa 8: Pista para La Joye -->
     <div id="stage-8" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡La aventura no ha terminado!</h2>
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
-            <button class="adventure-button mt-8" data-next-stage="9">
-                Ya voy a La Joye
-            </button>
+            <!-- Se elimina el botón "Ya voy a La Joye" para que el usuario resuelva el acertijo y se mueva físicamente -->
         </div>
     </div>
 
-    <!-- Etapa 9: Reto de las medallas en La Joye -->
+    <!-- Etapa 9: Reto de las medallas en La Joye (Con formulario) -->
     <div id="stage-9" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aquí no basta con verse bien!</h2>
@@ -301,6 +297,7 @@
             <p class="text-base md:text-lg mb-4">
                 Ve a la parte de atrás y busca tu recompensa!
             </p>
+            <!-- Se mantiene este botón para avanzar una vez que la recompensa virtual fue desbloqueada -->
             <button class="adventure-button mt-8" data-next-stage="11">Siguiente</button>
         </div>
     </div>
@@ -312,9 +309,7 @@
             <p class="text-base md:text-lg mb-4">
                 regrese a la base de exploradores inmediatamente!!
             </p>
-            <button class="adventure-button mt-8" data-next-stage="12">
-                Voy para la base
-            </button>
+            <!-- Se elimina el botón "Voy para la base" para que el usuario tenga que regresar a casa y encontrar el siguiente QR -->
         </div>
     </div>
 
@@ -338,6 +333,7 @@
             <p class="text-base md:text-lg mb-4">
                 "¿Cuál crees que es la combinación secreta?"
             </p>
+            <!-- Se mantiene este botón para iniciar el proceso de resolver el acertijo dentro de la misma página -->
             <button class="adventure-button bg-green-600 hover:bg-green-700 mt-8" data-next-stage="13">
                 ¡Resolver el acertijo!
             </button>
@@ -361,7 +357,6 @@
 
     <!-- Etapa 14: Video de Felicitaciones del narrador -->
     <div id="stage-14" class="page-content video-page">
-        <!-- Contenedor del video que ahora ocupa todo el ancho y tiene la relación de aspecto correcta -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
             <iframe id="youtube-player-2" width="100%" height="100%" src="" title="Video de felicitaciones" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
@@ -481,7 +476,7 @@
             const feedback = document.getElementById('medallas-feedback');
             const numericAnswer = parseInt(answer, 10);
             
-            // Corrección: La respuesta correcta ahora se compara de forma estricta con el número 38
+            // La respuesta correcta se compara de forma estricta con el número 38
             if (numericAnswer === 38) {
                 feedback.innerText = "";
                 goToStage(10); // Pasar a la siguiente etapa
@@ -506,8 +501,8 @@
             }
         });
 
-        // Nuevo enfoque: Delegación de eventos para los botones de "Siguiente"
-        // Utilizamos el atributo 'data-next-stage' para saber a qué etapa ir
+        // Nuevo enfoque: Delegación de eventos para los botones de avance
+        // Este evento solo se activará en los botones que quedan con data-next-stage
         document.body.addEventListener('click', (event) => {
             const target = event.target;
             if (target.matches('[data-next-stage]')) {
