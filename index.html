@@ -34,7 +34,7 @@
             display: none; /* Oculta todas las páginas por defecto */
             transition: opacity 0.5s ease-in-out;
             padding: 2.5rem;
-            position: relative; /* Necesario para posicionar el botón de salto */
+            position: relative;
             text-align: center; /* Centramos el contenido por defecto */
         }
         .page-content.active {
@@ -169,7 +169,7 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
         <!-- El video ahora ocupa todo el ancho de la página, fuera del content-wrapper -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?enablejsapi=1&origin=https://cumplevictor.github.io" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&enablejsapi=1&origin=https://cumplevictor.github.io" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -393,7 +393,7 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
         <!-- El video ahora ocupa todo el ancho de la página, fuera del content-wrapper -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?enablejsapi=1&origin=https://cumplevictor.github.io" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&enablejsapi=1&origin=https://cumplevictor.github.io" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -420,14 +420,12 @@
 
     // Esta función se llama cuando la API del reproductor de YouTube está lista.
     function onYouTubeIframeAPIReady() {
-        // Inicializa el reproductor 1
         player1 = new YT.Player('youtube-player-1', {
             events: {
                 'onReady': onPlayerReady
             }
         });
 
-        // Inicializa el reproductor 2
         player2 = new YT.Player('youtube-player-2', {
             events: {
                 'onReady': onPlayerReady
@@ -437,7 +435,7 @@
 
     // Se ejecuta una vez que los reproductores están listos
     function onPlayerReady(event) {
-        // No hace nada, el video solo se reproduce cuando se navega a esa página.
+        // La reproducción se maneja en la función goToStage
     }
     
     // Función para reproducir el video de un reproductor específico
@@ -448,12 +446,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Obtenemos el parámetro de la URL
+        // Obtenemos el parámetro de la URL para saber en qué etapa estamos
         const urlParams = new URLSearchParams(window.location.search);
         let currentStage = parseInt(urlParams.get('stage')) || 0;
         let lastStage = 15;
 
-        // Función para mostrar un mensaje personalizado
+        // Función para mostrar un cuadro de mensaje
         function showMessageBox(message) {
             document.getElementById('message-text').innerText = message;
             document.getElementById('overlay').style.display = 'block';
@@ -468,9 +466,9 @@
 
         // Navega a una etapa específica
         window.goToStage = function(stageNumber) {
-            // Detenemos todos los videos antes de cambiar de página
-            if (player1) { player1.pauseVideo(); }
-            if (player2) { player2.pauseVideo(); }
+            // Detenemos todos los videos antes de cambiar de página para evitar que se escuchen
+            if (player1) { player1.stopVideo(); }
+            if (player2) { player2.stopVideo(); }
 
             const currentStageElement = document.getElementById(`stage-${currentStage}`);
             if (currentStageElement) {
@@ -491,28 +489,21 @@
             }
         }
         
-        // Navega a la siguiente etapa
-        window.goToNextStage = function() {
-            if (currentStage < lastStage) {
-                goToStage(currentStage + 1);
-            }
-        }
-
         // Configuración inicial de la página
         goToStage(currentStage);
 
         // Agregamos listeners a los botones
         document.getElementById('start-button').addEventListener('click', () => {
-            goToNextStage();
+            // Avanza a la primera etapa, donde está el video
+            goToStage(1);
         });
 
         document.getElementById('answer-button').addEventListener('click', () => {
             const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
-            // Respuestas posibles para el acertijo
             const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado'];
             if (correctAnswers.includes(answerInput)) {
                 showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
-                goToStage(3);
+                // La navegación a la siguiente etapa se hará con el QR
             } else {
                 showMessageBox('Incorrecto. Inténtalo de nuevo.');
             }
@@ -520,10 +511,9 @@
 
         document.getElementById('medallas-button').addEventListener('click', () => {
             const medallasInput = document.getElementById('medallas-input').value.trim();
-            // Supongamos que la respuesta correcta es '10'
             if (medallasInput === '10') {
                 showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.');
-                goToStage(10);
+                // La navegación a la siguiente etapa se hará con el QR
             } else {
                 showMessageBox('Incorrecto. Intenta contar de nuevo.');
             }
@@ -531,10 +521,11 @@
 
         document.getElementById('cofre-button').addEventListener('click', () => {
             const cofreInput = document.getElementById('cofre-input').value.trim();
+            const cofreFeedback = document.getElementById('cofre-feedback');
             // Calcular la respuesta correcta: (100 * 3) + 366 - 365 = 300 + 1 = 301
             if (cofreInput === '301') {
                 showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
-                goToStage(14);
+                goToStage(14); // Esta es la única navegación directa que queda
             } else {
                 showMessageBox('Incorrecto. Vuelve a calcular el acertijo.');
             }
