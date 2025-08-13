@@ -103,23 +103,6 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        .skip-button {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            transition: all 0.2s ease;
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            cursor: pointer;
-        }
-        .skip-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
         .message-box {
             position: fixed;
             top: 50%;
@@ -198,9 +181,6 @@
                 que está en el escritorio. El QR debe dirigir a esta misma
                 página con la URL: https://cumplevictor.github.io/cumplevictor?stage=2 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -216,9 +196,6 @@
                 Desbloquear Pista
             </button>
             <div id="feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -234,9 +211,6 @@
                 que estará junto a la tablet. El QR debe dirigir a esta misma
                 página con la URL: https://cumplevictor.github.io/cumplevictor?stage=4 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -252,9 +226,6 @@
                 que está cerca del cepillo o espejo. El QR debe dirigir a
                 esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=5 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -276,9 +247,6 @@
                 <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
                 El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=6 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -294,9 +262,6 @@
                 junto a la nueva pala de pádel. El QR debe dirigir a esta
                 misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=7 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -311,9 +276,6 @@
                 <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
                 El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=8 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -324,9 +286,6 @@
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -342,9 +301,6 @@
                 Comprobar
             </button>
             <div id="medallas-feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -360,9 +316,6 @@
                 junto con el regalo. El QR debe dirigir a esta misma página
                 con la URL: https://cumplevictor.github.io/cumplevictor?stage=11 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -377,9 +330,6 @@
                 <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
                 El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=12 -->
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -406,9 +356,6 @@
             <button onclick="goToStage(13)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
                 ¡Resolver el acertijo!
             </button>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -424,9 +371,6 @@
                 Abrir Cofre
             </button>
             <div id="cofre-feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -439,9 +383,6 @@
             </p>
             <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
                 despedida
-            </button>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
             </button>
         </div>
     </div>
@@ -467,6 +408,45 @@
 </div> <!-- Fin del contenedor principal -->
 
 <script>
+    // Carga la API de Iframe de YouTube de manera asíncrona.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // Variables para los reproductores de YouTube
+    var player1;
+    var player2;
+
+    // Esta función se llama cuando la API del reproductor de YouTube está lista.
+    function onYouTubeIframeAPIReady() {
+        // Inicializa el reproductor 1
+        player1 = new YT.Player('youtube-player-1', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+
+        // Inicializa el reproductor 2
+        player2 = new YT.Player('youtube-player-2', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    // Se ejecuta una vez que los reproductores están listos
+    function onPlayerReady(event) {
+        // No hace nada, el video solo se reproduce cuando se navega a esa página.
+    }
+    
+    // Función para reproducir el video de un reproductor específico
+    function playVideo(player) {
+        if (player && typeof player.playVideo === 'function') {
+            player.playVideo();
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // Obtenemos el parámetro de la URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -488,6 +468,10 @@
 
         // Navega a una etapa específica
         window.goToStage = function(stageNumber) {
+            // Detenemos todos los videos antes de cambiar de página
+            if (player1) { player1.pauseVideo(); }
+            if (player2) { player2.pauseVideo(); }
+
             const currentStageElement = document.getElementById(`stage-${currentStage}`);
             if (currentStageElement) {
                 currentStageElement.classList.remove('active');
@@ -497,6 +481,13 @@
             if (nextStageElement) {
                 nextStageElement.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Reproduce el video si la etapa es la 1 o la 15
+                if (currentStage === 1) {
+                    playVideo(player1);
+                } else if (currentStage === 15) {
+                    playVideo(player2);
+                }
             }
         }
         
@@ -517,44 +508,35 @@
 
         document.getElementById('answer-button').addEventListener('click', () => {
             const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
-            const feedback = document.getElementById('feedback');
             // Respuestas posibles para el acertijo
             const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado'];
             if (correctAnswers.includes(answerInput)) {
                 showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
                 goToStage(3);
-                feedback.innerText = '';
             } else {
                 showMessageBox('Incorrecto. Inténtalo de nuevo.');
-                feedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
         });
 
         document.getElementById('medallas-button').addEventListener('click', () => {
             const medallasInput = document.getElementById('medallas-input').value.trim();
-            const medallasFeedback = document.getElementById('medallas-feedback');
             // Supongamos que la respuesta correcta es '10'
             if (medallasInput === '10') {
                 showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.');
                 goToStage(10);
-                medallasFeedback.innerText = '';
             } else {
                 showMessageBox('Incorrecto. Intenta contar de nuevo.');
-                medallasFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
         });
 
         document.getElementById('cofre-button').addEventListener('click', () => {
             const cofreInput = document.getElementById('cofre-input').value.trim();
-            const cofreFeedback = document.getElementById('cofre-feedback');
             // Calcular la respuesta correcta: (100 * 3) + 366 - 365 = 300 + 1 = 301
             if (cofreInput === '301') {
                 showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
                 goToStage(14);
-                cofreFeedback.innerText = '';
             } else {
                 showMessageBox('Incorrecto. Vuelve a calcular el acertijo.');
-                cofreFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
             }
         });
 
