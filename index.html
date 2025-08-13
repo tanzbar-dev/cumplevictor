@@ -32,6 +32,7 @@
             display: none; /* Oculta todas las páginas por defecto */
             transition: opacity 0.5s ease-in-out;
             padding: 2.5rem;
+            position: relative; /* Necesario para posicionar el botón de salto */
         }
         .page-content.active {
             display: block; /* Muestra solo la página activa */
@@ -89,6 +90,23 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        .skip-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            transition: all 0.2s ease;
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+        .skip-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -103,7 +121,7 @@
         </p>
         <!-- ESPACIO PARA LA IMAGEN GENERADA POR IA -->
         <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
-            <!-- La imagen del principio se ha actualizado a la URL correcta con extensión .jpeg -->
+            <!-- Se ha cambiado la URL de la imagen a una ruta relativa para mayor estabilidad -->
             <img src="/cumplehuguito.jpeg" alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" class="w-full h-auto object-cover">
         </div>
         <button id="start-button" class="adventure-button">
@@ -114,7 +132,7 @@
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
     <div id="stage-1" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
-        <!-- AQUÍ VA EL VIDEO DE BIENVENIDA -->
+        <!-- AQUÍ VA EL VIDEO DE BIENVEVIDA -->
         <!-- AQUI ESTÁ EL CONTENEDOR QUE HACE EL VIDEO RESPONSIVO -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
             <!-- Se ha agregado el parámetro &start=0 para que el video comience desde el inicio -->
@@ -130,6 +148,9 @@
                  que está en el escritorio. El QR debe dirigir a esta misma
                  página con la URL: https://cumple2025.hugovergara.com?stage=2 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 2: Reto de la Tablet (Con formulario de respuesta) -->
@@ -144,6 +165,9 @@
             Desbloquear Pista
         </button>
         <div id="feedback" class="mt-4 text-red-400 font-semibold"></div>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 3: Pista para encontrar la tablet -->
@@ -157,6 +181,9 @@
                  que estará junto a la tablet. El QR debe dirigir a esta misma
                  página con la URL: https://cumple2025.hugovergara.com?stage=4 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 4: Pista de la Playera Moschino (sin botón) -->
@@ -170,6 +197,9 @@
                  que está cerca del cepillo o espejo. El QR debe dirigir a
                  esta misma página con la URL: https://cumple2025.hugovergara.com?stage=5 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 5: Acertijo del Pádel -->
@@ -189,6 +219,9 @@
             <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
                  El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=6 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 6: Reto del Club de Pádel (sin video) -->
@@ -202,6 +235,9 @@
                  junto a la nueva pala de pádel. El QR debe dirigir a esta
                  misma página con la URL: https://cumple2025.hugovergara.com?stage=7 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 7: Mensaje de Cibó (sin botón) -->
@@ -214,6 +250,9 @@
             <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
                  El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=8 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 8: Pista para La Joye (sin video) -->
@@ -224,6 +263,9 @@
         </p>
         <button onclick="goToStage(9)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
             Ir a La Joye
+        </button>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
         </button>
     </div>
 
@@ -238,6 +280,9 @@
             Comprobar
         </button>
         <div id="medallas-feedback" class="mt-4 text-red-400 font-semibold"></div>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 10: Pista para la recompensa de La Joye -->
@@ -251,6 +296,9 @@
                  junto con el regalo. El QR debe dirigir a esta misma página
                  con la URL: https://cumple2025.hugovergara.com?stage=11 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 11: Mensaje para regresar a la casa -->
@@ -263,6 +311,9 @@
             <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
                  El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=12 -->
         </p>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 12: Acertijo final del cofre del tesoro -->
@@ -287,6 +338,9 @@
         <button onclick="goToStage(13)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
             ¡Resolver el acertijo!
         </button>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 13: Ingresar la combinación del cofre -->
@@ -300,6 +354,9 @@
             Abrir Cofre
         </button>
         <div id="cofre-feedback" class="mt-4 text-red-400 font-semibold"></div>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
     <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
@@ -310,6 +367,9 @@
         </p>
         <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
             ¡Ver la sorpresa final!
+        </button>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
         </button>
     </div>
 
@@ -331,6 +391,9 @@
         <button onclick="goToStage(0)" class="adventure-button bg-red-600 hover:bg-red-700">
             Reiniciar Aventura
         </button>
+        <button onclick="goToNextStage()" class="skip-button">
+            Avanzar >
+        </button>
     </div>
 
 </div>
@@ -346,11 +409,20 @@
             stages[currentStage].classList.remove('active');
         }
         
+        // Asegura que no se exceda el número de etapas
+        if (stageNumber >= stages.length) {
+            stageNumber = 0; // Regresa al inicio
+        }
+
         // Muestra la nueva etapa
         currentStage = stageNumber;
         if (stages[currentStage]) {
             stages[currentStage].classList.add('active');
         }
+    }
+
+    function goToNextStage() {
+      goToStage(currentStage + 1);
     }
 
     // Lógica para el botón de inicio
