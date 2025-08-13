@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura de Cumpleaños de Víctor</title>
+    <!-- Incluye Tailwind CSS para un estilo rápido y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cargamos una fuente de Google Fonts más aventurera y legible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados para un look más "de explorador" */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #261e1b; /* Marrón oscuro, como la tierra */
+            color: #f0f0c0; /* Texto en color crema para simular un pergamino */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container-card {
+            background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            animation: fadeIn 1.2s ease-in-out;
+            border: 2px solid #6a4f41; /* Borde de color marrón claro */
+        }
+        .page-content {
+            display: none; /* Oculta todas las páginas por defecto */
+            transition: opacity 0.5s ease-in-out;
+            padding: 2.5rem;
+        }
+        .page-content.active {
+            display: block; /* Muestra solo la página activa */
+            animation: slideIn 0.8s forwards;
+        }
+        h1, h2 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #d4b882; /* Tono dorado/bronce para títulos */
+        }
+        .video-responsive {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .video-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .adventure-button {
+            background: linear-gradient(90deg, #4a7c59, #6a4f41); /* Degradado de verde a marrón */
+            border-radius: 9999px;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(74, 124, 89, 0.3);
+            transform: scale(1);
+        }
+        .adventure-button:hover {
+            background: linear-gradient(90deg, #3b6b4e, #5a4136);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 20px rgba(74, 124, 89, 0.4);
+        }
+        input[type="text"], input[type="number"] {
+            background-color: #3c302a; /* Fondo más oscuro para el input */
+            color: #f0f0c0;
+            border: 1px solid #6a4f41;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #4a7c59;
+            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.5);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-card w-full p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
+
+    <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
+    <div id="stage-0" class="page-content active">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
+        <p class="text-lg md:text-xl mb-8">
+            El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
+        </p>
+        <!-- ESPACIO PARA LA IMAGEN GENERADA POR IA -->
+        <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
+            <!-- La imagen del principio se ha actualizado con la URL que mencionaste -->
+            <img src="https://cumple2025.hugovergara.com/cumplehuguito.jpg" alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" class="w-full h-auto object-cover">
+        </div>
+        <button id="start-button" class="adventure-button">
+            ¡Comenzar Aventura!
+        </button>
+    </div>
+
+    <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
+    <div id="stage-1" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
+        <!-- AQUÍ VA EL VIDEO DE BIENVENIDA -->
+        <!-- Pega el código de incrustación de YouTube o Vimeo aquí.
+             Ejemplo de YouTube: <iframe src="https://www.youtube.com/embed/XXXXX" frameborder="0" allowfullscreen></iframe>
+        -->
+        <div class="video-responsive rounded-xl overflow-hidden mb-8">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=I3T1h94eYf_267mG" title="Placeholder Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <p class="text-base md:text-lg mb-4">
+            <!-- AQUÍ VA LA PISTA DEL ESCRITORIO -->
+            Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
+            ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
+                 que está en el escritorio. El QR debe dirigir a esta misma
+                 página con la URL: https://cumple2025.hugovergara.com?stage=2 -->
+        </p>
+    </div>
+
+    <!-- Etapa 2: Reto de la Tablet (Con formulario de respuesta) -->
+    <div id="stage-2" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">El Enigma del Guardián Rectangular</h2>
+        <p class="text-base md:text-lg mb-4">
+            <!-- AQUÍ VA LA PREGUNTA DEL ACERTIJO -->
+            "Soy rectangular, pero no soy pizza. Tengo teclas, pero no soy piano. ¿Quién soy?"
+        </p>
+        <input type="text" id="answer-input" class="w-full md:w-2/3 lg:w-1/2 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Escribe tu respuesta aquí...">
+        <button id="answer-button" class="adventure-button bg-purple-600 hover:bg-purple-700">
+            Desbloquear Pista
+        </button>
+        <div id="feedback" class="mt-4 text-red-400 font-semibold"></div>
+    </div>
+
+    <!-- Etapa 3: Pista para encontrar la tablet -->
+    <div id="stage-3" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Acertaste!</h2>
+        <p class="text-base md:text-lg mb-4">
+            ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
+                 que estará junto a la tablet. El QR debe dirigir a esta misma
+                 página con la URL: https://cumple2025.hugovergara.com?stage=4 -->
+        </p>
+    </div>
+
+    <!-- Etapa 4: Pista de la Playera Moschino (sin botón) -->
+    <div id="stage-4" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡¡Pero te peinas!!</h2>
+        <p class="text-base md:text-lg mb-4">
+            Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
+                 que está cerca del cepillo o espejo. El QR debe dirigir a
+                 esta misma página con la URL: https://cumple2025.hugovergara.com?stage=5 -->
+        </p>
+    </div>
+
+    <!-- Etapa 5: Acertijo del Pádel -->
+    <div id="stage-5" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¿Eres lo suficientemente hábil?</h2>
+        <p class="text-base md:text-lg mb-4">
+            El siguiente acertijo te llevará a tu siguiente aventura: <br><br>
+            No es la playa pero tiene arena, <br>
+            ahí usas una pala pero no para la tierra, <br>
+            hay una red pero no es de pescar, <br>
+            y 4 paredes para rebotar. <br><br>
+            Si quieres encontrar tu siguiente señal, <br>
+            ve a donde juegas con banana y tu papá <br>
+            y pregunta en recepción que seguirá!
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
+                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=6 -->
+        </p>
+    </div>
+
+    <!-- Etapa 6: Reto del Club de Pádel (sin video) -->
+    <div id="stage-6" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">Reto: Club de Pádel</h2>
+        <p class="text-base md:text-lg mb-4">
+            "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
+                 junto a la nueva pala de pádel. El QR debe dirigir a esta
+                 misma página con la URL: https://cumple2025.hugovergara.com?stage=7 -->
+        </p>
+    </div>
+
+    <!-- Etapa 7: Mensaje de Cibó (sin botón) -->
+    <div id="stage-7" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Vas muy bien!</h2>
+        <p class="text-base md:text-lg mb-4">
+            Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
+                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=8 -->
+        </p>
+    </div>
+
+    <!-- Etapa 8: Pista para La Joye (sin video) -->
+    <div id="stage-8" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡La aventura no ha terminado!</h2>
+        <p class="text-base md:text-lg mb-4">
+            "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
+        </p>
+        <button onclick="goToStage(9)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
+            Ir a La Joye
+        </button>
+    </div>
+
+    <!-- Etapa 9: Reto de las medallas en La Joye -->
+    <div id="stage-9" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aquí no basta con verse bien!</h2>
+        <p class="text-base md:text-lg mb-4">
+            Aquí no basta con ser inteligente o verse bien, hay que trabajar para ganarse las cosas!! Tu siguiente reto es contar cuantas medallas hay en la joye si aciertas puedes avanzar!
+        </p>
+        <input type="text" id="medallas-input" class="w-full md:w-2/3 lg:w-1/2 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Escribe el número de medallas aquí...">
+        <button id="medallas-button" class="adventure-button bg-purple-600 hover:bg-purple-700">
+            Comprobar
+        </button>
+        <div id="medallas-feedback" class="mt-4 text-red-400 font-semibold"></div>
+    </div>
+
+    <!-- Etapa 10: Pista para la recompensa de La Joye -->
+    <div id="stage-10" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Respuesta correcta!</h2>
+        <p class="text-base md:text-lg mb-4">
+            Ve a la parte de atrás y busca tu recompensa!
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
+                 junto con el regalo. El QR debe dirigir a esta misma página
+                 con la URL: https://cumple2025.hugovergara.com?stage=11 -->
+        </p>
+    </div>
+
+    <!-- Etapa 11: Mensaje para regresar a la casa -->
+    <div id="stage-11" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Explorador Víctor necesitamos su ayuda!</h2>
+        <p class="text-base md:text-lg mb-4">
+            regrese a la base de exploradores inmediatamente!!
+        </p>
+        <p class="text-sm text-gray-400 mt-8">
+            <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
+                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=12 -->
+        </p>
+    </div>
+
+    <!-- Etapa 12: Acertijo final del cofre del tesoro -->
+    <div id="stage-12" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡El Secreto del Cofre!</h2>
+        <p class="text-base md:text-lg mb-4">
+            "Felicitaciones nuevamente no solo por tu cumpleaños sino por haber llegado hasta aquí! Sin embargo necesito tu ayuda! He encontrado un cofre del tesoro muy antiguo en una cueva misteriosa, pero tiene un candado con combinación numérica de 3 dígitos y no logro resolverlo."
+        </p>
+        <p class="text-base md:text-lg mb-4">
+            "Junto al cofre encontré este pergamino con un acertijo que dice: <br><br>
+            'El sabio guardián era un gran matemático. Antes de esconder su tesoro, hizo este cálculo secreto:
+            - Tomó el número de años que tiene un siglo (100)
+            - Lo multiplicó por el número de lados que tiene un triángulo (3)
+            - Al resultado le sumó el número de días que tiene un año bisiesto (366)
+            - Finalmente, le restó el número de días que tiene un año normal (365)
+            El resultado de esta operación es la clave del candado.' <br><br>
+            Explorador, he intentado resolver este acertijo muchas veces pero me confundo con los cálculos. ¿Podrías ayudarme paso a paso? Una vez que encuentres el número correcto, podremos abrir el candado y descubrir qué tesoro esconde el cofre."
+        </p>
+        <p class="text-base md:text-lg mb-4">
+            "¿Cuál crees que es la combinación secreta?"
+        </p>
+        <button onclick="goToStage(13)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
+            ¡Resolver el acertijo!
+        </button>
+    </div>
+
+    <!-- Etapa 13: Ingresar la combinación del cofre -->
+    <div id="stage-13" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">El Cofre Misterioso</h2>
+        <p class="text-base md:text-lg mb-4">
+            Ahora que tienes el acertijo, ¿cuál es el número de 3 dígitos que abre el candado?
+        </p>
+        <input type="number" id="cofre-input" class="w-full md:w-2/3 lg:w-1/2 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Escribe la combinación aquí (ej: 123)">
+        <button id="cofre-button" class="adventure-button bg-purple-600 hover:bg-purple-700">
+            Abrir Cofre
+        </button>
+        <div id="cofre-feedback" class="mt-4 text-red-400 font-semibold"></div>
+    </div>
+
+    <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
+    <div id="stage-14" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Felicitaciones, Explorador!</h2>
+        <p class="text-base md:text-lg mb-4">
+            "Has completado la misión. Este diente no es solo un fósil. Es la prueba de que todo gran explorador deja huella. ¿Listo para tu próxima aventura?"
+        </p>
+        <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
+            ¡Ver la sorpresa final!
+        </button>
+    </div>
+
+    <!-- Etapa 15: Sorpresa de Bob Esponja -->
+    <div id="stage-15" class="page-content">
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Sorpresa!</h2>
+        <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
+        <div class="video-responsive rounded-xl overflow-hidden mb-8">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=I3T1h94eYf_267mG" title="Placeholder Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <p class="text-base md:text-lg mb-4">
+            ¡Hola Víctor! ¡Nos vemos el **2 de septiembre** para pasar un día inolvidable en el **Hotel Nickelodeon** de Riviera Maya! Con una esponja que quiere festejar contigo!
+        </p>
+        <p class="text-2xl md:text-4xl font-bold mt-8">
+            ¡Felicidades!
+        </p>
+        <button onclick="goToStage(0)" class="adventure-button bg-red-600 hover:bg-red-700">
+            Reiniciar Aventura
+        </button>
+    </div>
+
+</div>
+
+<script>
+    // Maneja la navegación entre las etapas de la aventura.
+    let currentStage = 0;
+    const stages = document.querySelectorAll('.page-content');
+
+    function goToStage(stageNumber) {
+        // Oculta la etapa actual
+        if (stages[currentStage]) {
+            stages[currentStage].classList.remove('active');
+        }
+        
+        // Muestra la nueva etapa
+        currentStage = stageNumber;
+        if (stages[currentStage]) {
+            stages[currentStage].classList.add('active');
+        }
+    }
+
+    // Lógica para el botón de inicio
+    document.getElementById('start-button').addEventListener('click', () => {
+        goToStage(1);
+    });
+
+    // Lógica para el reto de la tablet
+    document.getElementById('answer-button').addEventListener('click', () => {
+        const input = document.getElementById('answer-input').value.toLowerCase().trim();
+        const feedback = document.getElementById('feedback');
+        
+        // La respuesta correcta es "tableta" o "tablet"
+        if (input === 'tableta' || input === 'tablet') {
+            feedback.textContent = ''; // Limpia el mensaje de error
+            goToStage(3); // Muestra la etapa para encontrar la tablet
+        } else {
+            feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
+        }
+    });
+
+    // Lógica para el reto de las medallas
+    document.getElementById('medallas-button').addEventListener('click', () => {
+        const input = document.getElementById('medallas-input').value.trim();
+        const feedback = document.getElementById('medallas-feedback');
+
+        // La respuesta correcta es "37"
+        if (input === '37') {
+            feedback.textContent = ''; // Limpia el mensaje de error
+            goToStage(10); // Muestra la pista para encontrar la recompensa
+        } else {
+            feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
+        }
+    });
+    
+    // Lógica para el reto del cofre
+    document.getElementById('cofre-button').addEventListener('click', () => {
+        const input = document.getElementById('cofre-input').value.trim();
+        const feedback = document.getElementById('cofre-feedback');
+
+        // La respuesta correcta es "301"
+        if (input === '301') {
+            feedback.textContent = ''; // Limpia el mensaje de error
+            goToStage(14); // Muestra la felicitación del narrador
+        } else {
+            feedback.textContent = 'Respuesta incorrecta. Inténtalo de nuevo.';
+        }
+    });
+
+    // Opcional: Permite presionar Enter en el campo de texto para desbloquear la pista
+    document.getElementById('answer-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('answer-button').click();
+        }
+    });
+
+    // Opcional: Permite presionar Enter en el campo de texto de medallas para desbloquear la pista
+    document.getElementById('medallas-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('medallas-button').click();
+        }
+    });
+
+    // Opcional: Permite presionar Enter en el campo de texto del cofre para desbloquear la pista
+    document.getElementById('cofre-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('cofre-button').click();
+        }
+    });
+
+    // Lógica para manejar la navegación por URL al cargar la página
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const stageFromUrl = urlParams.get('stage');
+
+        if (stageFromUrl) {
+            const stageNumber = parseInt(stageFromUrl, 10);
+            if (!isNaN(stageNumber) && stageNumber >= 0 && stageNumber < stages.length) {
+                goToStage(stageNumber);
+            }
+        }
+    };
+</script>
+
+</body>
+</html>
