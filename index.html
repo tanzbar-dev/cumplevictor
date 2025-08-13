@@ -520,7 +520,9 @@
         document.getElementById('answer-button').addEventListener('click', () => {
             const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
             const feedback = document.getElementById('feedback');
-            if (answerInput === 'computadora' || answerInput === 'el monitor' || answerInput === 'el teclado' || answerInput === 'la computadora' || answerInput === 'la pc' || answerInput === 'pc' || answerInput === 'monitor' || answerInput === 'teclado') {
+            // Respuestas posibles para el acertijo
+            const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado'];
+            if (correctAnswers.includes(answerInput)) {
                 showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
                 goToStage(3);
                 feedback.innerText = '';
