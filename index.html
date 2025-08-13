@@ -20,185 +20,252 @@
             min-height: 100vh;
             padding: 1rem;
         }
+        
+        /* Contenedor principal con ancho flexible */
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1.2s ease-in-out;
             border: 2px solid #6a4f41; /* Borde de color marrón claro */
             width: 100%;
-            max-width: 1200px; /* Añadimos un ancho máximo para pantallas muy grandes */
+            max-width: 900px; /* Ancho máximo más generoso para videos */
         }
+        
         .page-content {
             display: none; /* Oculta todas las páginas por defecto */
-            transition: opacity 0.5s ease-in-out;
-            /* FIX: Eliminamos el padding horizontal para que el video ocupe más espacio */
-            padding: 2.5rem 0;
-            position: relative;
-            text-align: center; /* Centramos el contenido por defecto */
         }
+        
         .page-content.active {
-            display: block; /* Muestra solo la página activa */
-            animation: slideIn 0.8s forwards;
+            display: block; /* Muestra la página activa */
+            animation: slideIn 0.8s ease-in-out;
         }
-        /* Contenedor interno para el texto y otros elementos, con ancho limitado */
-        .content-wrapper {
-            max-width: 60rem; /* max-w-4xl en Tailwind */
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            padding: 0 2.5rem; /* Añadimos padding aquí para compensar el que quitamos de .page-content */
-        }
-        h1, h2 {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            color: #d4b882; /* Tono dorado/bronce para títulos */
-        }
-        .video-responsive {
-            position: relative;
-            padding-bottom: 56.25%; /* Mantiene una relación de aspecto de 16:9 */
-            height: 0;
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            width: 100%; /* El video ocupará el 100% del contenedor .page-content */
-            margin: 0 auto 2rem auto; /* Margen inferior añadido */
-        }
-        .video-responsive iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        
+        /* Estilos específicos para videos */
+        .video-container {
             width: 100%;
-            height: 100%;
+            max-width: 100%;
+            margin: 0 auto;
         }
-        .adventure-button {
-            background: linear-gradient(90deg, #4a7c59, #6a4f41); /* Degradado de verde a marrón */
-            border-radius: 9999px;
-            padding: 1rem 2rem;
-            font-weight: 700;
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 10px rgba(74, 124, 89, 0.3);
-            transform: scale(1);
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            min-height: 400px; /* Altura mínima para asegurar que se vea bien */
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        .adventure-button:hover {
-            background: linear-gradient(90deg, #3b6b4e, #5a4136);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 20px rgba(74, 124, 89, 0.4);
+        
+        /* Asegurar que en pantallas pequeñas los videos se vean bien */
+        @media (max-width: 768px) {
+            .video-container video {
+                min-height: 250px;
+            }
         }
-        input[type="text"], input[type="number"] {
-            background-color: #3c302a; /* Fondo más oscuro para el input */
-            color: #f0f0c0;
-            border: 1px solid #6a4f41;
+        
+        .btn-explorer {
+            background: linear-gradient(135deg, #d4af37, #b8941f); /* Dorado como el oro de un tesoro */
+            color: #2c1810;
+            border: 2px solid #e6c547;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
-        input[type="text"]:focus, input[type="number"]:focus {
-            border-color: #4a7c59;
-            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.5);
+        
+        .btn-explorer:hover {
+            background: linear-gradient(135deg, #e6c547, #d4af37);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #8b7355, #6a4f41);
+            color: #f0f0c0;
+            border: 2px solid #a0845c;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #a0845c, #8b7355);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
+        }
+        
+        .treasure-text {
+            background: linear-gradient(135deg, #d4af37, #e6c547);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Animaciones */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        
         @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #3c302a;
-            border: 2px solid #d4b882;
-            padding: 2rem;
-            border-radius: 10px;
-            z-index: 1000;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            animation: zoomIn 0.3s forwards;
-            display: none; /* Hidden by default */
+        
+        /* Efectos de particulas de polvo */
+        .dust-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: #d4af37;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
         }
-        @keyframes zoomIn {
-            from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-            display: none;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
     </style>
 </head>
 <body>
+    <div class="container-card rounded-xl p-8 relative overflow-hidden">
+        <!-- Partículas de polvo flotante -->
+        <div class="dust-particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="dust-particle" style="top: 60%; left: 85%; animation-delay: 2s;"></div>
+        <div class="dust-particle" style="top: 80%; left: 25%; animation-delay: 4s;"></div>
 
-<div class="overlay" id="overlay"></div>
-<div class="message-box text-center" id="message-box">
-    <p id="message-text" class="text-xl mb-6"></p>
-    <button onclick="closeMessageBox()" class="adventure-button">Cerrar</button>
-</div>
-
-<div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
-
-    <div id="stage-0" class="page-content active">
-        <div class="content-wrapper">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
-            <p class="text-lg md:text-xl mb-8">
-                El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
-            </p>
-            <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
-                <img src="https://raw.githubusercontent.com/tanzbar-dev/cumplevictor/main/cumplehuguito.jpeg"
-                     alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro"
-                     class="w-full h-auto object-cover">
+        <!-- Página 1: Portada -->
+        <div id="page1" class="page-content active text-center">
+            <h1 class="text-4xl md:text-6xl treasure-text mb-6">🏺 AVENTURA ÉPICA 🏺</h1>
+            <h2 class="text-2xl md:text-3xl mb-8">¡El Cumpleaños de Víctor!</h2>
+            <div class="mb-8">
+                <p class="text-lg md:text-xl mb-4">🗺️ Un explorador ha descubierto algo increíble...</p>
+                <p class="text-base md:text-lg opacity-80">¿Estás listo para la aventura más emocionante?</p>
             </div>
-            <button id="start-button" class="adventure-button" onclick="goToStage(1)">
-                Comenzar la Aventura
+            <button onclick="nextPage()" class="btn-explorer text-lg">
+                ⚡ ¡COMENZAR LA AVENTURA! ⚡
             </button>
         </div>
+
+        <!-- Página 2: Primer Video -->
+        <div id="page2" class="page-content">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl treasure-text mb-4">🎬 PRIMERA PISTA DESCUBIERTA</h2>
+                <p class="text-lg mb-6">El explorador ha encontrado evidencia de algo extraordinario...</p>
+            </div>
+            
+            <div class="video-container mb-6">
+                <video controls class="w-full">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+            
+            <div class="text-center space-y-4">
+                <p class="text-lg">🔍 ¡Increíble! Pero hay más secretos por descubrir...</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="prevPage()" class="btn-secondary">⬅️ Volver</button>
+                    <button onclick="nextPage()" class="btn-explorer">🚀 ¡Siguiente Descubrimiento!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 3: Segundo Video -->
+        <div id="page3" class="page-content">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl treasure-text mb-4">💎 EL GRAN DESCUBRIMIENTO</h2>
+                <p class="text-lg mb-6">¡El momento que estábamos esperando ha llegado!</p>
+            </div>
+            
+            <div class="video-container mb-6">
+                <video controls class="w-full">
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+            
+            <div class="text-center space-y-4">
+                <p class="text-lg">🎉 ¡El tesoro más grande de todos: TU CUMPLEAÑOS!</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="prevPage()" class="btn-secondary">⬅️ Video Anterior</button>
+                    <button onclick="nextPage()" class="btn-explorer">🎂 ¡Celebración Final!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 4: Mensaje Final -->
+        <div id="page4" class="page-content text-center">
+            <h1 class="text-4xl md:text-5xl treasure-text mb-6">🎉 ¡FELIZ CUMPLEAÑOS VÍCTOR! 🎉</h1>
+            <div class="space-y-6">
+                <p class="text-xl md:text-2xl">🏆 ¡Has completado la aventura más épica!</p>
+                <p class="text-lg">El verdadero tesoro eres tú y todos los momentos increíbles que vienen.</p>
+                <p class="text-lg">Que este nuevo año esté lleno de:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-600/50">
+                        <p>🌟 Aventuras increíbles</p>
+                    </div>
+                    <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-600/50">
+                        <p>💫 Sueños cumplidos</p>
+                    </div>
+                    <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-600/50">
+                        <p>🎯 Metas alcanzadas</p>
+                    </div>
+                    <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-600/50">
+                        <p>❤️ Momentos felices</p>
+                    </div>
+                </div>
+                <button onclick="restart()" class="btn-explorer text-lg">
+                    🔄 ¡Revivir la Aventura!
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="stage-1" class="page-content">
-        <div class="video-responsive rounded-xl overflow-hidden">
-            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&rel=0" title="Video de bienvenida con temática de aventura" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-        <div class="content-wrapper">
-            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Feliz cumpleaños explorador Victor!</h2>
-            <p class="text-base md:text-lg mb-4">
-                Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
-                ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
-            </p>
-            <p class="text-sm text-gray-400 mt-8">
-                </p>
-        </div>
-    </div>
+    <script>
+        let currentPage = 1;
+        const totalPages = 4;
 
-    <div id="stage-2" class="page-content">
-        <div class="content-wrapper">
-            <h2 class="text-2xl md:text-4xl font-semibold mb-6">El Enigma del Guardián Rectangular</h2>
-            <p class="text-base md:text-lg mb-4">
-                "Soy rectangular, pero no soy pizza. Tengo teclas, pero no soy piano. ¿Quién soy?"
-            </p>
-            <input type="text" id="answer-input" class="w-full md:w-2/3 lg:w-1/2 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Escribe tu respuesta aquí...">
-            <button id="answer-button" class="adventure-button bg-purple-600 hover:bg-purple-700">
-                Desbloquear Pista
-            </button>
-            <div id="feedback" class="mt-4 text-red-400 font-semibold"></div>
-        </div>
-    </div>
+        function showPage(pageNumber) {
+            // Ocultar todas las páginas
+            for (let i = 1; i <= totalPages; i++) {
+                const page = document.getElementById(`page${i}`);
+                page.classList.remove('active');
+            }
+            
+            // Mostrar la página actual
+            const currentPageElement = document.getElementById(`page${pageNumber}`);
+            currentPageElement.classList.add('active');
+        }
 
-    <div id="stage-3" class="page-content">
-        <div class="content-wrapper">
-            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Acertaste!</h2>
-            <p class="text-base md:text-lg mb-4">
-                ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
-            </p>
-            <p class="text-sm text-gray-400 mt-8">
-                </p>
-        </div>
-    </div>
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
 
-    <div id="stage-4" class="page-content">
-            <div class="content-wrapper">
-                <h2 class="text-2xl md:text-4xl font-semibold
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function restart() {
+            currentPage = 1;
+            showPage(currentPage);
+        }
+
+        // Inicializar la primera página
+        showPage(1);
+    </script>
+</body>
+</html>
