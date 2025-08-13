@@ -351,4 +351,142 @@
             <p class="text-base md:text-lg mb-4">
                 Ahora que tienes el acertijo, ¿cuál es el número de 3 dígitos que abre el candado?
             </p>
-            <input type="number" id="cofre-input" class="w-full md:
+            <input type="number" id="cofre-input" class="w-full md:w-2/3 lg:w-1/2 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Escribe la combinación aquí (ej: 123)">
+            <button id="cofre-button" class="adventure-button bg-purple-600 hover:bg-purple-700">
+                Abrir Cofre
+            </button>
+            <div id="cofre-feedback" class="mt-4 text-red-400 font-semibold"></div>
+        </div>
+    </div>
+
+    <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
+    <div id="stage-14" class="page-content">
+        <div class="content-wrapper">
+            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Tesoro Desbloqueado!</h2>
+            <p class="text-base md:text-lg mb-4">
+                ¡Lo lograste! El cofre se ha abierto. ¡Feliz cumpleaños, Víctor! ¡Has completado esta aventura con éxito! Ahora, ¡a disfrutar de tu recompensa!
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Variable para la etapa actual, inicia en 0
+    let currentStage = 0;
+
+    // Función para mostrar un mensaje emergente
+    function showMessageBox(message) {
+        document.getElementById('message-text').innerText = message;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('message-box').style.display = 'block';
+    }
+
+    // Función para cerrar el mensaje emergente
+    function closeMessageBox() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('message-box').style.display = 'none';
+    }
+
+    // Función principal para cambiar de etapa
+    function goToStage(stageNumber) {
+        // Aseguramos que la etapa es un número y está dentro del rango
+        if (typeof stageNumber !== 'number' || stageNumber < 0 || stageNumber > 14) {
+            console.error("Etapa inválida:", stageNumber);
+            return;
+        }
+
+        // Ocultar la etapa actual
+        const currentStageElement = document.getElementById(`stage-${currentStage}`);
+        if (currentStageElement) {
+            currentStageElement.classList.remove('active');
+        }
+
+        // Mostrar la nueva etapa
+        currentStage = stageNumber;
+        const newStageElement = document.getElementById(`stage-${currentStage}`);
+        if (newStageElement) {
+            newStageElement.classList.add('active');
+        }
+        
+        // Desplazar la vista al principio de la página
+        window.scrollTo(0, 0);
+
+        // Lógica específica para videos
+        if (currentStage === 1) {
+            const videoPlayer = document.getElementById('youtube-player-1');
+            if (videoPlayer) {
+                // Reinicia el video para que comience automáticamente si se regresa a esta etapa
+                videoPlayer.src = videoPlayer.src;
+            }
+        }
+    }
+
+    // Lógica para el Reto de la Tablet (Etapa 2)
+    document.getElementById('answer-button').addEventListener('click', function() {
+        const answer = document.getElementById('answer-input').value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback');
+        if (answer === "tablet" || answer === "la tablet") {
+            feedback.innerText = "";
+            goToStage(3); // Pasar a la siguiente etapa
+        } else {
+            feedback.innerText = "¡Respuesta incorrecta! Intenta de nuevo.";
+        }
+    });
+
+    // Lógica para el Reto de las Medallas (Etapa 9)
+    document.getElementById('medallas-button').addEventListener('click', function() {
+        const answer = document.getElementById('medallas-input').value.trim();
+        const feedback = document.getElementById('medallas-feedback');
+        // La respuesta correcta es 70, según la descripción original
+        if (answer === "70") {
+            feedback.innerText = "";
+            goToStage(10); // Pasar a la siguiente etapa
+        } else {
+            feedback.innerText = "¡Número incorrecto! El tesoro no se desbloqueará así de fácil.";
+        }
+    });
+
+    // Lógica para el Reto del Cofre (Etapa 13)
+    document.getElementById('cofre-button').addEventListener('click', function() {
+        const answer = document.getElementById('cofre-input').value.trim();
+        const feedback = document.getElementById('cofre-feedback');
+        // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
+        if (answer === "301") {
+            feedback.innerText = "";
+            goToStage(14); // Pasar a la etapa final
+        } else {
+            feedback.innerText = "¡La combinación es incorrecta! Intenta de nuevo.";
+        }
+    });
+
+    // Nueva función para verificar si hay un parámetro 'stage' en la URL
+    function checkURLForStage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const stageParam = urlParams.get('stage');
+
+        if (stageParam) {
+            const stageNumber = parseInt(stageParam);
+            // Asegúrate de que el número sea válido antes de intentar ir a la etapa
+            if (!isNaN(stageNumber)) {
+                // Ir a la etapa especificada en la URL en lugar de la etapa 0
+                goToStage(stageNumber);
+            } else {
+                // Si el parámetro no es un número, ir a la etapa inicial por defecto
+                goToStage(0);
+            }
+        } else {
+            // Si no hay parámetro 'stage', ir a la etapa inicial por defecto
+            goToStage(0);
+        }
+    }
+
+    // Llama a la nueva función cuando la página se ha cargado completamente
+    window.onload = function() {
+        checkURLForStage();
+    };
+
+</script>
+
+</body>
+</html>
