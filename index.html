@@ -356,11 +356,10 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Lo lograste! El cofre se ha abierto. ¡Feliz cumpleaños, Víctor! ¡Has completado esta aventura con éxito! Ahora, ¡a disfrutar de tu recompensa!
             </p>
-            <button class="adventure-button mt-8" data-next-stage="15">Finalizar</button>
         </div>
     </div>
 
-    <!-- Etapa 15: Mensaje de fin de aventura -->
+    <!-- Etapa 15: Mensaje de fin de aventura, sin botón de siguiente -->
     <div id="stage-15" class="page-content">
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aventura completa!</h2>
@@ -417,23 +416,17 @@
         // Desplazar la vista al principio de la página
         window.scrollTo(0, 0);
 
-        // Lógica específica para videos, para que se reproduzcan al entrar.
-        // Se cargan dinámicamente para asegurar que se muestren correctamente.
+        // Lógica específica para videos, para que se reproduzcan al entrar sin retraso.
         if (currentStage === 1) {
-            setTimeout(() => {
-                const videoPlayer = document.getElementById('youtube-player-1');
-                if (videoPlayer) {
-                    videoPlayer.src = `https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&rel=0`;
-                }
-            }, 100); // Pequeño retraso para que el DOM se actualice
-        }
-        if (currentStage === 14) {
-            setTimeout(() => {
-                const videoPlayer = document.getElementById('youtube-player-2');
-                if (videoPlayer) {
-                    videoPlayer.src = `https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&rel=0`;
-                }
-            }, 100); // Pequeño retraso para que el DOM se actualice
+            const videoPlayer = document.getElementById('youtube-player-1');
+            if (videoPlayer) {
+                videoPlayer.src = `https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&rel=0`;
+            }
+        } else if (currentStage === 14) {
+            const videoPlayer = document.getElementById('youtube-player-2');
+            if (videoPlayer) {
+                videoPlayer.src = `https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&rel=0`;
+            }
         }
     }
 
