@@ -36,7 +36,7 @@
         }
         
         .page-content.active {
-            display: block; /* Muestra la página activa */
+            display: block !important; /* Muestra la página activa con mayor prioridad */
             animation: slideIn 0.8s ease-in-out;
         }
         
@@ -234,15 +234,23 @@
         const totalPages = 4;
 
         function showPage(pageNumber) {
+            console.log(`Mostrando página ${pageNumber}`); // Debug
+            
             // Ocultar todas las páginas
             for (let i = 1; i <= totalPages; i++) {
                 const page = document.getElementById(`page${i}`);
-                page.classList.remove('active');
+                if (page) {
+                    page.classList.remove('active');
+                    page.style.display = 'none';
+                }
             }
             
             // Mostrar la página actual
             const currentPageElement = document.getElementById(`page${pageNumber}`);
-            currentPageElement.classList.add('active');
+            if (currentPageElement) {
+                currentPageElement.style.display = 'block';
+                currentPageElement.classList.add('active');
+            }
         }
 
         function nextPage() {
@@ -264,7 +272,12 @@
             showPage(currentPage);
         }
 
-        // Inicializar la primera página
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage(1);
+        });
+
+        // También inicializar inmediatamente por si acaso
         showPage(1);
     </script>
 </body>
