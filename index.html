@@ -149,7 +149,6 @@
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
-    <!-- Se eliminó la clase 'active' para que el script la maneje completamente -->
     <div id="stage-0" class="page-content">
         <div class="content-wrapper">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
@@ -168,20 +167,16 @@
     </div>
 
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
-    <!-- Contenedor especial para la página de video, sin padding lateral -->
     <div id="stage-1" class="page-content video-page">
-        <!-- El video ocupa todo el ancho del contenedor padre -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
             <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&rel=0" title="Video de bienvenida con temática de aventura" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
-        <!-- El resto del contenido está en un wrapper con padding -->
         <div class="content-wrapper">
             <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
             <p class="text-base md:text-lg mb-4">
                 Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
                 ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(2)">Siguiente</button>
         </div>
     </div>
@@ -208,7 +203,6 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(4)">Siguiente</button>
         </div>
     </div>
@@ -220,7 +214,6 @@
             <p class="text-base md:text-lg mb-4">
                 Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(5)">Siguiente</button>
         </div>
     </div>
@@ -239,7 +232,6 @@
                 ve a donde juegas con banana y tu papá <br>
                 y pregunta en recepción que seguirá!
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(6)">Siguiente</button>
         </div>
     </div>
@@ -251,7 +243,6 @@
             <p class="text-base md:text-lg mb-4">
                 "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(7)">Siguiente</button>
         </div>
     </div>
@@ -263,7 +254,6 @@
             <p class="text-base md:text-lg mb-4">
                 Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(8)">Siguiente</button>
         </div>
     </div>
@@ -275,7 +265,6 @@
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(9)">Siguiente</button>
         </div>
     </div>
@@ -302,7 +291,6 @@
             <p class="text-base md:text-lg mb-4">
                 Ve a la parte de atrás y busca tu recompensa!
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(11)">Siguiente</button>
         </div>
     </div>
@@ -314,7 +302,6 @@
             <p class="text-base md:text-lg mb-4">
                 regrese a la base de exploradores inmediatamente!!
             </p>
-            <!-- Botón de avance añadido -->
             <button class="adventure-button mt-8" onclick="goToStage(12)">Siguiente</button>
         </div>
     </div>
@@ -367,6 +354,17 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Lo lograste! El cofre se ha abierto. ¡Feliz cumpleaños, Víctor! ¡Has completado esta aventura con éxito! Ahora, ¡a disfrutar de tu recompensa!
             </p>
+            <button class="adventure-button mt-8" onclick="goToStage(15)">Finalizar</button>
+        </div>
+    </div>
+
+    <!-- Etapa 15: Mensaje de fin de aventura -->
+    <div id="stage-15" class="page-content">
+        <div class="content-wrapper">
+            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aventura completa!</h2>
+            <p class="text-base md:text-lg mb-4">
+                Gracias por completar esta emocionante aventura. ¡Esperamos que hayas disfrutado de tu día especial!
+            </p>
         </div>
     </div>
 
@@ -392,7 +390,8 @@
     // Función principal para cambiar de etapa
     function goToStage(stageNumber) {
         // Aseguramos que la etapa es un número y está dentro del rango
-        if (typeof stageNumber !== 'number' || stageNumber < 0 || stageNumber > 14) {
+        // Se ha actualizado el rango para incluir la etapa 15
+        if (typeof stageNumber !== 'number' || stageNumber < 0 || stageNumber > 15) {
             console.error("Etapa inválida:", stageNumber);
             return;
         }
@@ -405,8 +404,17 @@
         // Mostrar solo la página correcta
         currentStage = stageNumber;
         const newStageElement = document.getElementById(`stage-${currentStage}`);
+        
+        // CORRECCIÓN: Se añade una validación para evitar errores si el elemento no existe (problema de caché)
         if (newStageElement) {
             newStageElement.classList.add('active');
+        } else {
+            console.error(`Error: No se encontró la etapa con ID 'stage-${currentStage}'`);
+            // Regresar a la pantalla de inicio si la etapa no existe
+            const defaultStageElement = document.getElementById('stage-0');
+            if (defaultStageElement) {
+                defaultStageElement.classList.add('active');
+            }
         }
         
         // Desplazar la vista al principio de la página
@@ -438,8 +446,8 @@
     document.getElementById('medallas-button').addEventListener('click', function() {
         const answer = document.getElementById('medallas-input').value.trim();
         const feedback = document.getElementById('medallas-feedback');
-        // La respuesta correcta es 70, según la descripción original
-        if (answer === "70") {
+        // La respuesta correcta se ha cambiado a 38
+        if (answer === "38") {
             feedback.innerText = "";
             goToStage(10); // Pasar a la siguiente etapa
         } else {
@@ -468,7 +476,8 @@
         if (stageParam) {
             const stageNumber = parseInt(stageParam);
             // Si el parámetro es un número válido, lo usamos como etapa inicial
-            if (!isNaN(stageNumber)) {
+            // Se ha actualizado el rango para incluir la etapa 15
+            if (!isNaN(stageNumber) && stageNumber >= 0 && stageNumber <= 15) {
                 initialStage = stageNumber;
             }
         }
