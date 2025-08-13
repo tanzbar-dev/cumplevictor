@@ -114,14 +114,13 @@
 <div class="container-card w-full p-6 md:p-12 rounded-2xl flex flex-col items-center text-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
-    <div id="stage-0" class="page-content active">
+    <!-- NOTA: Se eliminó la clase 'active' de aquí para que el JS controle la etapa inicial. -->
+    <div id="stage-0" class="page-content">
         <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
         <p class="text-lg md:text-xl mb-8">
             El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
         </p>
         <!-- AQUÍ VA LA IMAGEN -->
-        <!-- La URL se ha actualizado a la ruta que me proporcionaste. -->
-        <!-- NOTA: Si necesitas cambiar el nombre de la imagen o el repositorio, solo edita este enlace. -->
         <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
             <img src="https://raw.githubusercontent.com/Hugo-Vergara/Aventura-Victor/main/cumplehuguito.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/3c302a/d4b882?text=Error+al+cargar+imagen';" alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" class="w-full h-auto object-cover">
         </div>
@@ -134,9 +133,7 @@
     <div id="stage-1" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
         <!-- AQUÍ VA EL VIDEO DE BIENVEVIDA -->
-        <!-- AQUI ESTÁ EL CONTENEDOR QUE HACE EL VIDEO RESPONSIVO -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
-            <!-- NOTA: Se ha eliminado el autoplay por defecto. Ahora se activa con JavaScript. -->
             <iframe id="video-bienvenida" width="560" height="315" src="https://www.youtube.com/embed/OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
@@ -378,7 +375,6 @@
     <div id="stage-15" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Sorpresa!</h2>
         <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
-        <!-- AQUI ESTÁ EL CONTENEDOR QUE HACE EL VIDEO RESPONSIVO -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
             <iframe id="video-sorpresa" width="560" height="315" src="https://www.youtube.com/embed/e-kM1dY8e8s" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
@@ -410,7 +406,7 @@
     const stages = document.querySelectorAll('.page-content');
 
     function goToStage(stageNumber) {
-        // Pausa todos los videos al cambiar de etapa, limpiando la URL
+        // Pausa todos los videos al cambiar de etapa, limpiando la URL para detener la reproducción
         videoBienvenidaIframe.src = '';
         videoSorpresaIframe.src = '';
 
@@ -517,13 +513,17 @@
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const stageFromUrl = urlParams.get('stage');
+        let initialStage = 0; // Por defecto, se inicia en la Etapa 0
 
         if (stageFromUrl) {
-            const stageNumber = parseInt(stageFromUrl, 10);
-            if (!isNaN(stageNumber) && stageNumber >= 0 && stageNumber < stages.length) {
-                goToStage(stageNumber);
+            const parsedStage = parseInt(stageFromUrl, 10);
+            if (!isNaN(parsedStage) && parsedStage >= 0 && parsedStage < stages.length) {
+                initialStage = parsedStage;
             }
         }
+        
+        // Muestra la etapa correcta, ya sea la del URL o la inicial (0)
+        goToStage(initialStage);
     };
 </script>
 
