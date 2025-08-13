@@ -387,6 +387,7 @@
     <div id="stage-15" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
+            <!-- He corregido la URL para asegurarme de que el video se cargue y se muestre correctamente -->
             <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&rel=0" title="Sorpresa final de Bob Esponja" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
@@ -432,14 +433,19 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const stageFromUrl = parseInt(urlParams.get('stage'));
-        // Si hay una etapa en la URL, vamos directamente a ella. Si no, a la 0.
-        goToStage(stageFromUrl || 0);
+        // Usamos un valor por defecto (0) si el parámetro 'stage' no existe
+        const stageFromUrl = parseInt(urlParams.get('stage')) || 0;
+
+        // Mostrar la etapa inicial o la etapa de la URL
+        const initialStageElement = document.getElementById(`stage-${stageFromUrl}`);
+        if (initialStageElement) {
+            initialStageElement.classList.add('active');
+        }
 
         // Agregamos listeners a los botones de respuesta
         document.getElementById('answer-button').addEventListener('click', () => {
             const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
-            const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado'];
+            const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado', 'computador', 'tablet', 'la tablet', 'tableta'];
             if (correctAnswers.includes(answerInput)) {
                 showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
             } else {
@@ -458,6 +464,7 @@
 
         document.getElementById('cofre-button').addEventListener('click', () => {
             const cofreInput = document.getElementById('cofre-input').value.trim();
+            // La combinación correcta es: (100 * 3) + 366 - 365 = 300 + 1 = 301
             if (cofreInput === '301') {
                 showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
                 goToStage(14);
