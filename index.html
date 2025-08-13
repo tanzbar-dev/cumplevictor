@@ -20,6 +20,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 1rem;
         }
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
@@ -122,6 +123,10 @@
         <!-- AQUÍ VA LA IMAGEN -->
         <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
             <img src="https://raw.githubusercontent.com/Hugo-Vergara/Aventura-Victor/main/cumplehuguito.jpeg" alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" class="w-full h-auto object-cover">
+        </div>
+        <!-- Se ha corregido y añadido el botón de inicio que faltaba -->
+        <button id="start-button" class="adventure-button">
+            Comenzar la Aventura >
         </button>
     </div>
 
@@ -130,7 +135,6 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
         <!-- AQUÍ VA EL VIDEO DE BIENVEVIDA -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
-            <!-- NOTA: Se ha corregido la URL del video de bienvenida -->
             <iframe id="video-bienvenida" width="560" height="315" src="https://www.youtube.com/embed/OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
@@ -140,8 +144,8 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                 que está en el escritorio. El QR debe dirigir a esta misma
-                 página con la URL: https://cumple2025.hugovergara.com?stage=2 -->
+            que está en el escritorio. El QR debe dirigir a esta misma
+            página con la URL: https://cumple2025.hugovergara.com?stage=2 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -173,8 +177,8 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                 que estará junto a la tablet. El QR debe dirigir a esta misma
-                 página con la URL: https://cumple2025.hugovergara.com?stage=4 -->
+            que estará junto a la tablet. El QR debe dirigir a esta misma
+            página con la URL: https://cumple2025.hugovergara.com?stage=4 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -189,8 +193,8 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                 que está cerca del cepillo o espejo. El QR debe dirigir a
-                 esta misma página con la URL: https://cumple2025.hugovergara.com?stage=5 -->
+            que está cerca del cepillo o espejo. El QR debe dirigir a
+            esta misma página con la URL: https://cumple2025.hugovergara.com?stage=5 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -212,7 +216,7 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
-                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=6 -->
+            El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=6 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -227,8 +231,8 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                 junto a la nueva pala de pádel. El QR debe dirigir a esta
-                 misma página con la URL: https://cumple2025.hugovergara.com?stage=7 -->
+            junto a la nueva pala de pádel. El QR debe dirigir a esta
+            misma página con la URL: https://cumple2025.hugovergara.com?stage=7 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -243,7 +247,7 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
-                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=8 -->
+            El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=8 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -256,7 +260,8 @@
         <p class="text-base md:text-lg mb-4">
             "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
         </p>
-        <button onclick="goToStage(9)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
+        <!-- Aquí he corregido el botón para que vaya a la siguiente etapa -->
+        <button onclick="goToNextStage()" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
             Ir a La Joye
         </button>
         <button onclick="goToNextStage()" class="skip-button">
@@ -288,8 +293,8 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                 junto con el regalo. El QR debe dirigir a esta misma página
-                 con la URL: https://cumple2025.hugovergara.com?stage=11 -->
+            junto con el regalo. El QR debe dirigir a esta misma página
+            con la URL: https://cumple2025.hugovergara.com?stage=11 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -304,7 +309,7 @@
         </p>
         <p class="text-sm text-gray-400 mt-8">
             <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
-                 El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=12 -->
+            El QR debe dirigir a esta misma página con la URL: https://cumple2025.hugovergara.com?stage=12 -->
         </p>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -330,7 +335,8 @@
         <p class="text-base md:text-lg mb-4">
             "¿Cuál crees que es la combinación secreta?"
         </p>
-        <button onclick="goToStage(13)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
+        <!-- Se ha corregido y añadido el botón para ir a la siguiente etapa -->
+        <button onclick="goToNextStage()" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
             ¡Resolver el acertijo!
         </button>
         <button onclick="goToNextStage()" class="skip-button">
@@ -360,7 +366,8 @@
         <p class="text-base md:text-lg mb-4">
             "Has completado la misión. Este diente no es solo un fósil. Es la prueba de que todo gran explorador deja huella. ¿Listo para tu próxima aventura?"
         </p>
-        <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
+        <!-- Se ha corregido el botón para que vaya a la siguiente etapa -->
+        <button onclick="goToNextStage()" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
             ¡Ver la sorpresa final!
         </button>
         <button onclick="goToNextStage()" class="skip-button">
@@ -373,7 +380,6 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Sorpresa!</h2>
         <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
-            <!-- NOTA: Se ha corregido la URL del video de la sorpresa final -->
             <iframe id="video-sorpresa" width="560" height="315" src="https://www.youtube.com/embed/eFfxl63UOF4" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
@@ -517,6 +523,7 @@
         if (stageFromUrl) {
             const parsedStage = parseInt(stageFromUrl, 10);
             if (!isNaN(parsedStage) && parsedStage >= 0 && parsedStage < stages.length) {
+                // Aquí usamos goToStage(parsedStage) para activar el video si es necesario.
                 goToStage(parsedStage);
             }
         }
