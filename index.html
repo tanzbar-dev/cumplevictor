@@ -119,10 +119,11 @@
         <p class="text-lg md:text-xl mb-8">
             El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
         </p>
-        <!-- AQUI VA LA IMAGEN GENERADA POR IA -->
-        <!-- Se ha reemplazado con una URL de imagen de mapa del tesoro más temática y funcional -->
+        <!-- AQUÍ VA LA IMAGEN -->
+        <!-- La URL se ha actualizado a la ruta que me proporcionaste. -->
+        <!-- NOTA: Si necesitas cambiar el nombre de la imagen o el repositorio, solo edita este enlace. -->
         <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
-            <img src="cumplehuguito.jpeg" alt="Mapa del tesoro antiguo" class="w-full h-auto object-cover">
+            <img src="https://raw.githubusercontent.com/Hugo-Vergara/Aventura-Victor/main/cumplehuguito.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/3c302a/d4b882?text=Error+al+cargar+imagen';" alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" class="w-full h-auto object-cover">
         </div>
         <button id="start-button" class="adventure-button">
             ¡Comenzar Aventura!
@@ -134,9 +135,9 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
         <!-- AQUÍ VA EL VIDEO DE BIENVEVIDA -->
         <!-- AQUI ESTÁ EL CONTENEDOR QUE HACE EL VIDEO RESPONSIVO -->
-        <!-- Se ha usado una URL de video diferente para esta etapa -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <!-- NOTA: Se ha eliminado el autoplay por defecto. Ahora se activa con JavaScript. -->
+            <iframe id="video-bienvenida" width="560" height="315" src="https://www.youtube.com/embed/OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
             <!-- AQUÍ VA LA PISTA DEL ESCRITORIO -->
@@ -378,9 +379,8 @@
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Sorpresa!</h2>
         <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
         <!-- AQUI ESTÁ EL CONTENEDOR QUE HACE EL VIDEO RESPONSIVO -->
-        <!-- Se ha usado una URL de video diferente para esta etapa -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/5qap5aO42J4" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="video-sorpresa" width="560" height="315" src="https://www.youtube.com/embed/e-kM1dY8e8s" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
             ¡Hola Víctor! ¡Nos vemos el **2 de septiembre** para pasar un día inolvidable en el **Hotel Nickelodeon** de Riviera Maya! Con una esponja que quiere festejar contigo!
@@ -399,11 +399,21 @@
 </div>
 
 <script>
+    // Variables para los iframes
+    const videoBienvenidaIframe = document.getElementById('video-bienvenida');
+    const videoSorpresaIframe = document.getElementById('video-sorpresa');
+    let videoBienvenidaSrc = videoBienvenidaIframe.src;
+    let videoSorpresaSrc = videoSorpresaIframe.src;
+    
     // Maneja la navegación entre las etapas de la aventura.
     let currentStage = 0;
     const stages = document.querySelectorAll('.page-content');
 
     function goToStage(stageNumber) {
+        // Pausa todos los videos al cambiar de etapa, limpiando la URL
+        videoBienvenidaIframe.src = '';
+        videoSorpresaIframe.src = '';
+
         // Oculta la etapa actual
         if (stages[currentStage]) {
             stages[currentStage].classList.remove('active');
@@ -418,6 +428,16 @@
         currentStage = stageNumber;
         if (stages[currentStage]) {
             stages[currentStage].classList.add('active');
+        }
+
+        // Lógica de reproducción específica para cada etapa
+        if (currentStage === 1) {
+            // Reestablece la URL con el autoplay para que el video inicie
+            videoBienvenidaIframe.src = videoBienvenidaSrc + '?autoplay=1';
+        }
+        if (currentStage === 15) {
+            // Reestablece la URL con el autoplay para que el video inicie
+            videoSorpresaIframe.src = videoSorpresaSrc + '?autoplay=1';
         }
     }
 
