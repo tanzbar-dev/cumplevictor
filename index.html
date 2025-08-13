@@ -180,11 +180,8 @@
                 Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
                 ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que está en el escritorio. El QR debe dirigir a esta misma
-                página con la URL: https://cumplevictor.github.io/cumplevictor?stage=2 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(2)">Siguiente</button>
         </div>
     </div>
 
@@ -210,11 +207,8 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que estará junto a la tablet. El QR debe dirigir a esta misma
-                página con la URL: https://cumplevictor.github.io/cumplevictor?stage=4 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(4)">Siguiente</button>
         </div>
     </div>
 
@@ -225,11 +219,8 @@
             <p class="text-base md:text-lg mb-4">
                 Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que está cerca del cepillo o espejo. El QR debe dirigir a
-                esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=5 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(5)">Siguiente</button>
         </div>
     </div>
 
@@ -247,10 +238,8 @@
                 ve a donde juegas con banana y tu papá <br>
                 y pregunta en recepción que seguirá!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=6 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(6)">Siguiente</button>
         </div>
     </div>
 
@@ -261,11 +250,8 @@
             <p class="text-base md:text-lg mb-4">
                 "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                junto a la nueva pala de pádel. El QR debe dirigir a esta
-                misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=7 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(7)">Siguiente</button>
         </div>
     </div>
 
@@ -276,10 +262,8 @@
             <p class="text-base md:text-lg mb-4">
                 Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=8 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(8)">Siguiente</button>
         </div>
     </div>
 
@@ -290,6 +274,8 @@
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(9)">Siguiente</button>
         </div>
     </div>
 
@@ -315,11 +301,8 @@
             <p class="text-base md:text-lg mb-4">
                 Ve a la parte de atrás y busca tu recompensa!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                junto con el regalo. El QR debe dirigir a esta misma página
-                con la URL: https://cumplevictor.github.io/cumplevictor?stage=11 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(11)">Siguiente</button>
         </div>
     </div>
 
@@ -330,10 +313,8 @@
             <p class="text-base md:text-lg mb-4">
                 regrese a la base de exploradores inmediatamente!!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=12 -->
-            </p>
+            <!-- Botón de avance añadido -->
+            <button class="adventure-button mt-8" onclick="goToStage(12)">Siguiente</button>
         </div>
     </div>
 
@@ -429,16 +410,25 @@
     }
 
     // Función para mostrar un cuadro de mensaje
-    function showMessageBox(message) {
+    function showMessageBox(message, callback) {
         document.getElementById('message-text').innerText = message;
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('message-box').style.display = 'block';
+        // Asigna el callback al botón de cerrar si existe
+        if (callback) {
+            document.getElementById('message-box').querySelector('button').onclick = () => {
+                closeMessageBox();
+                callback();
+            };
+        }
     }
 
     // Función para cerrar el cuadro de mensaje
     window.closeMessageBox = function() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('message-box').style.display = 'none';
+        // Restablecer el comportamiento por defecto del botón
+        document.getElementById('message-box').querySelector('button').onclick = closeMessageBox;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -457,7 +447,7 @@
             const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
             const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado', 'computador', 'tablet', 'la tablet', 'tableta'];
             if (correctAnswers.includes(answerInput)) {
-                showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
+                showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.', () => goToStage(3));
             } else {
                 showMessageBox('Incorrecto. Inténtalo de nuevo.');
             }
@@ -466,7 +456,7 @@
         document.getElementById('medallas-button').addEventListener('click', () => {
             const medallasInput = document.getElementById('medallas-input').value.trim();
             if (medallasInput === '10') {
-                showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.');
+                showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.', () => goToStage(10));
             } else {
                 showMessageBox('Incorrecto. Intenta contar de nuevo.');
             }
@@ -476,8 +466,7 @@
             const cofreInput = document.getElementById('cofre-input').value.trim();
             // La combinación correcta es: (100 * 3) + 366 - 365 = 300 + 1 = 301
             if (cofreInput === '301') {
-                showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
-                goToStage(14);
+                showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!', () => goToStage(14));
             } else {
                 showMessageBox('Incorrecto. Vuelve a calcular el acertijo.');
             }
