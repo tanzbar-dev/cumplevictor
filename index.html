@@ -183,8 +183,8 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <!-- NOTA: El id del iframe y el data-videoid son cruciales para la nueva API de YouTube. -->
-            <iframe id="youtube-player-1" width="100%" height="100%" src="" data-videoid="OXNgMQbK_R8" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <!-- Usamos la API de YouTube para controlar la reproducción de manera fiable -->
+            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?enablejsapi=1&origin=https://cumplevictor.github.io" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -451,7 +451,7 @@
         </div>
         <!-- Contenedor del video con ancho completo sin límites de tamaño -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="youtube-player-2" width="100%" height="100%" src="" data-videoid="eFfxl63UOF4" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?enablejsapi=1&origin=https://cumplevictor.github.io" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
             <p class="text-base md:text-lg mb-4">
@@ -466,52 +466,46 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-    // Variable para almacenar los objetos de los reproductores de YouTube
+    // Variables para almacenar los objetos de los reproductores de YouTube
     let players = {};
-    let isApiReady = false;
 
-    // Esta función es llamada automáticamente por la API de YouTube
-    window.onYouTubeIframeAPIReady = function() {
-        isApiReady = true;
-        // Reproducimos el video de la etapa actual si es necesario
+    // Esta función es llamada automáticamente por la API de YouTube cuando está lista
+    function onYouTubeIframeAPIReady() {
+        // Obtenemos la etapa actual de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
-        showStage(currentStage);
-    };
-
-    const playVideo = (playerId, videoId) => {
-        // Detenemos cualquier otro video antes de reproducir uno nuevo
-        for (const id in players) {
-            if (id !== playerId) {
-                try {
-                    players[id].stopVideo();
-                } catch (e) {
-                    // Ignorar si el reproductor aún no se ha cargado
-                }
+        
+        // Creamos los reproductores una vez que la API está lista
+        players['youtube-player-1'] = new YT.Player('youtube-player-1', {
+            events: {
+                'onReady': onPlayerReady
             }
-        }
+        });
 
-        // Si el reproductor no existe, lo creamos
-        if (!players[playerId]) {
-            players[playerId] = new YT.Player(playerId, {
-                videoId: videoId,
-                events: {
-                    'onReady': (event) => {
-                        event.target.playVideo();
-                    },
-                    'onStateChange': (event) => {
-                        // Manejo de eventos si fuera necesario
-                    }
-                }
-            });
-        } else {
-            // Si ya existe, lo cargamos y lo reproducimos
-            players[playerId].loadVideoById(videoId);
-            players[playerId].playVideo();
-        }
-    };
+        players['youtube-player-2'] = new YT.Player('youtube-player-2', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
 
-    // Función para mostrar solo una etapa específica
+        // Mostramos la etapa inicial
+        showStage(currentStage);
+    }
+    
+    // Esta función se llama cuando un reproductor está listo
+    function onPlayerReady(event) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
+
+        // Comprobamos si el reproductor que acaba de cargarse es el de la etapa actual
+        if (
+            (currentStage === 1 && event.target.getIframe().id === 'youtube-player-1') ||
+            (currentStage === 15 && event.target.getIframe().id === 'youtube-player-2')
+        ) {
+            event.target.playVideo();
+        }
+    }
+
     const showStage = (stageNumber) => {
         document.querySelectorAll('.page-content').forEach(page => {
             // Antes de ocultar la página, detenemos el video si lo tiene
@@ -521,7 +515,7 @@
                     try {
                         players[videoIframe.id].stopVideo();
                     } catch (e) {
-                        // Ignorar
+                        // Ignorar si el reproductor aún no se ha cargado
                     }
                 }
             }
@@ -532,11 +526,10 @@
         if (newStage) {
             newStage.classList.add('active');
             
-            // Si la nueva etapa tiene un video y la API ya está lista, la reproducimos
+            // Si la nueva etapa tiene un video, lo reproducimos
             const videoIframe = newStage.querySelector('iframe');
-            if (videoIframe && videoIframe.hasAttribute('data-videoid') && isApiReady) {
-                const videoId = videoIframe.getAttribute('data-videoid');
-                playVideo(videoIframe.id, videoId);
+            if (videoIframe && videoIframe.id in players) {
+                players[videoIframe.id].playVideo();
             }
 
             // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
@@ -616,12 +609,12 @@
     };
     window.closeMessageBox = closeMessageBox;
 
-    // Solo mostramos la etapa inicial si la API de YouTube no se ha cargado aún
-    // para evitar que se muestre una pantalla vacía antes de que la API esté lista.
-    if (!isApiReady) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentStage = urlParams.get('stage') ? parseInt(urlParams.get('stage')) : 0;
-        showStage(currentStage);
+    // Carga el script de la API de YouTube si aún no se ha cargado
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
 </script>
 
