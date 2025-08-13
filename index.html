@@ -22,7 +22,6 @@
             min-height: 100vh;
             padding: 1rem;
         }
-        /* El contenedor principal ahora no tiene un ancho máximo fijo */
         .container-card {
             background: linear-gradient(145deg, #3c302a, #261e1b); /* Degradado en tonos tierra */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -33,20 +32,24 @@
         .page-content {
             display: none; /* Oculta todas las páginas por defecto */
             transition: opacity 0.5s ease-in-out;
-            padding: 2.5rem;
-            position: relative; /* Necesario para posicionar el botón de salto */
-            text-align: center; /* Centramos el contenido por defecto */
+            position: relative;
+            text-align: center;
         }
         .page-content.active {
             display: block; /* Muestra solo la página activa */
             animation: slideIn 0.8s forwards;
         }
-        /* Contenedor interno para el texto y otros elementos, con ancho limitado */
+        /* Nueva clase para las páginas con video, sin padding horizontal para que el video ocupe el 100% */
+        .page-content.video-page {
+            padding: 0;
+        }
+        /* Contenedor interno para el texto y otros elementos, con ancho limitado y padding */
         .content-wrapper {
-            max-width: 60rem; /* max-w-4xl en Tailwind */
+            max-width: 60rem;
             margin-left: auto;
             margin-right: auto;
             text-align: center;
+            padding: 2.5rem;
         }
         h1, h2 {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -59,7 +62,6 @@
             overflow: hidden;
             border-radius: 16px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            /* Centramos el video dentro de su contenedor */
             width: 100%;
             margin: 0 auto;
         }
@@ -86,7 +88,7 @@
             box-shadow: 0 12px 20px rgba(74, 124, 89, 0.4);
         }
         input[type="text"], input[type="number"] {
-            background-color: #3c302a; /* Fondo más oscuro para el input */
+            background-color: #3c302a;
             color: #f0f0c0;
             border: 1px solid #6a4f41;
             transition: all 0.3s ease;
@@ -103,23 +105,6 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        .skip-button {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            transition: all 0.2s ease;
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            cursor: pointer;
-        }
-        .skip-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
         .message-box {
             position: fixed;
             top: 50%;
@@ -132,7 +117,7 @@
             z-index: 1000;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             animation: zoomIn 0.3s forwards;
-            display: none; /* Hidden by default */
+            display: none;
         }
         @keyframes zoomIn {
             from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
@@ -155,10 +140,9 @@
 <div class="overlay" id="overlay"></div>
 <div class="message-box text-center" id="message-box">
     <p id="message-text" class="text-xl mb-6"></p>
-    <button onclick="closeMessageBox()" class="adventure-button">Cerrar</button>
+    <button class="adventure-button" onclick="closeMessageBox()">Cerrar</button>
 </div>
 
-<!-- El contenedor principal ahora tiene un ancho completo y el contenido de texto se limita dentro de él. -->
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
@@ -168,39 +152,30 @@
             <p class="text-lg md:text-xl mb-8">
                 El día de hoy tienes una misión llena de retos, peligros y recompensas que solo puedes aceptar si es tu cumpleaños! estas listo para aceptarla?!? piensalo bien y da click en comenzar... solo recuerda que si aceptas no hay vuelta atras!
             </p>
-            <!-- AQUÍ VA LA IMAGEN -->
             <div class="w-full h-auto max-w-sm mx-auto mb-8 rounded-lg overflow-hidden">
                 <img src="https://raw.githubusercontent.com/tanzbar-dev/cumplevictor/main/cumplehuguito.jpeg" 
                     alt="Imagen de feliz cumpleaños, con temática de búsqueda del tesoro" 
                     class="w-full h-auto object-cover">
             </div>
-            <button id="start-button" class="adventure-button">
-                Comenzar la Aventura >
+            <button class="adventure-button" data-next-stage="1">
+                Comenzar la Aventura
             </button>
         </div>
     </div>
 
     <!-- Etapa 1: Video de Bienvenida y Primera Pista -->
-    <div id="stage-1" class="page-content">
-        <!-- El título se centra directamente en la página, fuera del content-wrapper -->
-        <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
-        <!-- El video ahora ocupa todo el ancho de la página, fuera del content-wrapper -->
+    <div id="stage-1" class="page-content video-page">
+        <!-- Contenedor del video que ahora ocupa todo el ancho y tiene la relación de aspecto correcta -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="youtube-player-1" width="100%" height="100%" src="https://www.youtube.com/embed/OXNgMQbK_R8?enablejsapi=1&origin=https://cumplevictor.github.io" title="Video de bienvenida con temática de aventura" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-1" width="100%" height="100%" src="" title="Video de bienvenida con temática de aventura" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
+            <h2 class="text-2xl md:text-4xl font-semibold mb-6">Feliz cumpleaños explorador Victor!</h2>
             <p class="text-base md:text-lg mb-4">
                 Para avanzar tienes que pensar cuidadosamente y resolver este acertijo: <br>
                 ¿dónde creas tus ideas? ¿dónde estudias, dibujas, diseñas? piensa en ese lugar y dirigete hacia alla!. Ese es tu primer reto.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que está en el escritorio. El QR debe dirigir a esta misma
-                página con la URL: https://cumplevictor.github.io/cumplevictor?stage=2 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="2">Siguiente</button>
         </div>
     </div>
 
@@ -216,9 +191,6 @@
                 Desbloquear Pista
             </button>
             <div id="feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -229,14 +201,7 @@
             <p class="text-base md:text-lg mb-4">
                 ¡Acertaste! Busca en el tercer cajón del closet que tienes al lado izquierdo tu recompensa.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que estará junto a la tablet. El QR debe dirigir a esta misma
-                página con la URL: https://cumplevictor.github.io/cumplevictor?stage=4 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="4">Siguiente</button>
         </div>
     </div>
 
@@ -247,14 +212,7 @@
             <p class="text-base md:text-lg mb-4">
                 Un buen explorador nunca descuida su arreglo personal. Ve a vestirte, arréglate y… ¡prepárate para la aventura!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea escaneando el código QR
-                que está cerca del cepillo o espejo. El QR debe dirigir a
-                esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=5 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="5">Siguiente</button>
         </div>
     </div>
 
@@ -272,13 +230,7 @@
                 ve a donde juegas con banana y tu papá <br>
                 y pregunta en recepción que seguirá!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea en la recepción del club, donde le darán el QR.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=6 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="6">Siguiente</button>
         </div>
     </div>
 
@@ -289,14 +241,7 @@
             <p class="text-base md:text-lg mb-4">
                 "Es hora de poner tu cuerpo en acción. Dirígete a la cancha. Ahí te espera el verdadero desafío físico. Pero ojo: solo los que apuntan con precisión desbloquean su destino."
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                junto a la nueva pala de pádel. El QR debe dirigir a esta
-                misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=7 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="7">Siguiente</button>
         </div>
     </div>
 
@@ -307,13 +252,7 @@
             <p class="text-base md:text-lg mb-4">
                 Pero ya se te debe estar agotando la energía. Ve a Cibó y come algo para continuar tu travesía.
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso es cuando el mesero le da el QR.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=8 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="8">Siguiente</button>
         </div>
     </div>
 
@@ -324,9 +263,7 @@
             <p class="text-base md:text-lg mb-4">
                 "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
             </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="9">Siguiente</button>
         </div>
     </div>
 
@@ -342,9 +279,6 @@
                 Comprobar
             </button>
             <div id="medallas-feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
@@ -355,14 +289,7 @@
             <p class="text-base md:text-lg mb-4">
                 Ve a la parte de atrás y busca tu recompensa!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con el QR que se le da
-                junto con el regalo. El QR debe dirigir a esta misma página
-                con la URL: https://cumplevictor.github.io/cumplevictor?stage=11 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="11">Siguiente</button>
         </div>
     </div>
 
@@ -373,13 +300,7 @@
             <p class="text-base md:text-lg mb-4">
                 regrese a la base de exploradores inmediatamente!!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: El siguiente paso se desbloquea con un QR en la casa.
-                El QR debe dirigir a esta misma página con la URL: https://cumplevictor.github.io/cumplevictor?stage=12 -->
-            </p>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
+            <button class="adventure-button mt-8" data-next-stage="12">Siguiente</button>
         </div>
     </div>
 
@@ -403,11 +324,8 @@
             <p class="text-base md:text-lg mb-4">
                 "¿Cuál crees que es la combinación secreta?"
             </p>
-            <button onclick="goToStage(13)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
+            <button class="adventure-button bg-green-600 hover:bg-green-700 mt-8" data-next-stage="13">
                 ¡Resolver el acertijo!
-            </button>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
             </button>
         </div>
     </div>
@@ -424,140 +342,174 @@
                 Abrir Cofre
             </button>
             <div id="cofre-feedback" class="mt-4 text-red-400 font-semibold"></div>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
         </div>
     </div>
 
-    <!-- Etapa 14: Felicitaciones del narrador (sin video, solo texto) -->
-    <div id="stage-14" class="page-content">
-        <div class="content-wrapper">
-            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Felicitaciones, Explorador!</h2>
-            <p class="text-base md:text-lg mb-4">
-                espero que hayas tenido una busqueda del tesoro muy divertida, que te hayan gustado tus regalos y que hayas aprendido lecciones valiosas
-            </p>
-            <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
-                despedida
-            </button>
-            <button onclick="goToNextStage()" class="skip-button">
-                Avanzar >
-            </button>
-        </div>
-    </div>
-
-    <!-- Etapa 15: Sorpresa de Bob Esponja -->
-    <div id="stage-15" class="page-content">
-        <!-- El título se centra directamente en la página, fuera del content-wrapper -->
-        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
-        <!-- El video ahora ocupa todo el ancho de la página, fuera del content-wrapper -->
+    <!-- Etapa 14: Video de Felicitaciones del narrador -->
+    <div id="stage-14" class="page-content video-page">
+        <!-- Contenedor del video que ahora ocupa todo el ancho y tiene la relación de aspecto correcta -->
         <div class="video-responsive w-full rounded-xl overflow-hidden mb-8">
-            <iframe id="youtube-player-2" width="100%" height="100%" src="https://www.youtube.com/embed/eFfxl63UOF4?enablejsapi=1&origin=https://cumplevictor.github.io" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="youtube-player-2" width="100%" height="100%" src="" title="Video de felicitaciones" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
         <div class="content-wrapper">
+            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Tesoro Desbloqueado!</h2>
             <p class="text-base md:text-lg mb-4">
-                Feliz cumpleaños Víctor!
+                ¡Lo lograste! El cofre se ha abierto. ¡Feliz cumpleaños, Víctor! ¡Has completado esta aventura con éxito! Ahora, ¡a disfrutar de tu recompensa!
             </p>
-            <p class="text-sm text-gray-400 mt-8">
-                <!-- NOTA: Aquí se termina la aventura. -->
+            <button class="adventure-button mt-8" data-next-stage="15">Finalizar</button>
+        </div>
+    </div>
+
+    <!-- Etapa 15: Mensaje de fin de aventura -->
+    <div id="stage-15" class="page-content">
+        <div class="content-wrapper">
+            <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Aventura completa!</h2>
+            <p class="text-base md:text-lg mb-4">
+                Gracias por completar esta emocionante aventura. ¡Esperamos que hayas disfrutado de tu día especial!
             </p>
         </div>
     </div>
 
-</div> <!-- Fin del contenedor principal -->
+</div>
 
 <script>
+    // Variable para la etapa actual, se inicializa en 0
+    let currentStage = 0;
+
+    // Función para mostrar un mensaje emergente
+    function showMessageBox(message) {
+        document.getElementById('message-text').innerText = message;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('message-box').style.display = 'block';
+    }
+
+    // Función para cerrar el mensaje emergente
+    function closeMessageBox() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('message-box').style.display = 'none';
+    }
+
+    // Función principal para cambiar de etapa
+    function goToStage(stageNumber) {
+        // Aseguramos que la etapa es un número y está dentro del rango
+        if (typeof stageNumber !== 'number' || stageNumber < 0 || stageNumber > 15) {
+            console.error("Etapa inválida:", stageNumber);
+            return;
+        }
+
+        // Ocultar todas las páginas
+        document.querySelectorAll('.page-content').forEach(element => {
+            element.classList.remove('active');
+        });
+
+        // Mostrar solo la página correcta
+        currentStage = stageNumber;
+        const newStageElement = document.getElementById(`stage-${currentStage}`);
+        
+        if (newStageElement) {
+            newStageElement.classList.add('active');
+        } else {
+            console.error(`Error: No se encontró la etapa con ID 'stage-${currentStage}'`);
+            // En caso de error, volvemos a la pantalla de inicio
+            goToStage(0);
+        }
+        
+        // Desplazar la vista al principio de la página
+        window.scrollTo(0, 0);
+
+        // Lógica específica para videos, para que se reproduzcan al entrar.
+        // Se cargan dinámicamente para asegurar que se muestren correctamente.
+        if (currentStage === 1) {
+            setTimeout(() => {
+                const videoPlayer = document.getElementById('youtube-player-1');
+                if (videoPlayer) {
+                    videoPlayer.src = `https://www.youtube.com/embed/OXNgMQbK_R8?autoplay=1&mute=0&rel=0`;
+                }
+            }, 100); // Pequeño retraso para que el DOM se actualice
+        }
+        if (currentStage === 14) {
+            setTimeout(() => {
+                const videoPlayer = document.getElementById('youtube-player-2');
+                if (videoPlayer) {
+                    videoPlayer.src = `https://www.youtube.com/embed/eFfxl63UOF4?autoplay=1&mute=0&rel=0`;
+                }
+            }, 100); // Pequeño retraso para que el DOM se actualice
+        }
+    }
+
+    // Manejo de todos los eventos de botones y lógica de inicio
     document.addEventListener('DOMContentLoaded', () => {
-        // Obtenemos el parámetro de la URL
+        // Inicialización de la página según el parámetro de la URL
         const urlParams = new URLSearchParams(window.location.search);
-        let currentStage = parseInt(urlParams.get('stage')) || 0;
-        let lastStage = 15;
-
-        // Función para mostrar un mensaje personalizado
-        function showMessageBox(message) {
-            document.getElementById('message-text').innerText = message;
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('message-box').style.display = 'block';
-        }
-
-        // Función para cerrar el cuadro de mensaje
-        window.closeMessageBox = function() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('message-box').style.display = 'none';
-        }
-
-        // Navega a una etapa específica
-        window.goToStage = function(stageNumber) {
-            const currentStageElement = document.getElementById(`stage-${currentStage}`);
-            if (currentStageElement) {
-                currentStageElement.classList.remove('active');
-            }
-            currentStage = stageNumber;
-            const nextStageElement = document.getElementById(`stage-${currentStage}`);
-            if (nextStageElement) {
-                nextStageElement.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        const stageParam = urlParams.get('stage');
+        let initialStage = 0;
+        
+        if (stageParam) {
+            const stageNumber = parseInt(stageParam);
+            // Validamos que el número de etapa sea válido
+            if (!isNaN(stageNumber) && stageNumber >= 0 && stageNumber <= 15) {
+                initialStage = stageNumber;
+            } else {
+                console.error("Parámetro 'stage' inválido en la URL, se usará la etapa 0.");
             }
         }
         
-        // Navega a la siguiente etapa
-        window.goToNextStage = function() {
-            if (currentStage < lastStage) {
-                goToStage(currentStage + 1);
-            }
-        }
+        goToStage(initialStage);
 
-        // Configuración inicial de la página
-        goToStage(currentStage);
-
-        // Agregamos listeners a los botones
-        document.getElementById('start-button').addEventListener('click', () => {
-            goToNextStage();
-        });
-
+        // Lógica para el Reto de la Tablet (Etapa 2)
         document.getElementById('answer-button').addEventListener('click', () => {
-            const answerInput = document.getElementById('answer-input').value.toLowerCase().trim();
+            const answer = document.getElementById('answer-input').value.trim().toLowerCase();
             const feedback = document.getElementById('feedback');
-            // Respuestas posibles para el acertijo
-            const correctAnswers = ['computadora', 'el monitor', 'el teclado', 'la computadora', 'la pc', 'pc', 'monitor', 'teclado'];
-            if (correctAnswers.includes(answerInput)) {
-                showMessageBox('¡Correcto! Ve al tercer cajón del closet que tienes a tu lado izquierdo.');
-                goToStage(3);
-                feedback.innerText = '';
+            if (answer === "tablet" || answer === "la tablet") {
+                feedback.innerText = "";
+                goToStage(3); // Pasar a la siguiente etapa
             } else {
-                showMessageBox('Incorrecto. Inténtalo de nuevo.');
-                feedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
+                feedback.innerText = "¡Respuesta incorrecta! Intenta de nuevo.";
             }
         });
 
+        // Lógica para el Reto de las Medallas (Etapa 9)
         document.getElementById('medallas-button').addEventListener('click', () => {
-            const medallasInput = document.getElementById('medallas-input').value.trim();
-            const medallasFeedback = document.getElementById('medallas-feedback');
-            // Supongamos que la respuesta correcta es '10'
-            if (medallasInput === '10') {
-                showMessageBox('¡Correcto! Busca tu recompensa en la parte de atrás.');
-                goToStage(10);
-                medallasFeedback.innerText = '';
+            const answer = document.getElementById('medallas-input').value.trim();
+            const feedback = document.getElementById('medallas-feedback');
+            const numericAnswer = parseInt(answer, 10);
+            
+            // Corrección: La respuesta correcta ahora se compara de forma estricta con el número 38
+            if (numericAnswer === 38) {
+                feedback.innerText = "";
+                goToStage(10); // Pasar a la siguiente etapa
             } else {
-                showMessageBox('Incorrecto. Intenta contar de nuevo.');
-                medallasFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
+                feedback.innerText = "¡Número incorrecto! El tesoro no se desbloqueará así de fácil.";
             }
         });
 
+        // Lógica para el Reto del Cofre (Etapa 13)
         document.getElementById('cofre-button').addEventListener('click', () => {
-            const cofreInput = document.getElementById('cofre-input').value.trim();
-            const cofreFeedback = document.getElementById('cofre-feedback');
-            // Calcular la respuesta correcta: (100 * 3) + 366 - 365 = 300 + 1 = 301
-            if (cofreInput === '301') {
-                showMessageBox('¡Correcto! ¡El cofre se abre! ¡Feliz cumpleaños!');
-                goToStage(14);
-                cofreFeedback.innerText = '';
+            const answer = document.getElementById('cofre-input').value.trim();
+            const feedback = document.getElementById('cofre-feedback');
+            const numericAnswer = parseInt(answer, 10);
+            
+            // Cálculo del acertijo: (100 * 3) + 366 - 365 = 300 + 1 = 301
+            if (numericAnswer === 301) {
+                feedback.innerText = "";
+                // La respuesta correcta lleva a la etapa del segundo video
+                goToStage(14); 
             } else {
-                showMessageBox('Incorrecto. Vuelve a calcular el acertijo.');
-                cofreFeedback.innerText = 'Respuesta incorrecta. Inténtalo de nuevo.';
+                feedback.innerText = "¡La combinación es incorrecta! Intenta de nuevo.";
             }
         });
 
+        // Nuevo enfoque: Delegación de eventos para los botones de "Siguiente"
+        // Utilizamos el atributo 'data-next-stage' para saber a qué etapa ir
+        document.body.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.matches('[data-next-stage]')) {
+                const nextStage = parseInt(target.dataset.nextStage, 10);
+                if (!isNaN(nextStage)) {
+                    goToStage(nextStage);
+                }
+            }
+        });
     });
 </script>
 
