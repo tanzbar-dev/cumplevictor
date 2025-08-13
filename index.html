@@ -149,7 +149,8 @@
 <div class="container-card mx-auto p-6 md:p-12 rounded-2xl flex flex-col items-center">
 
     <!-- Etapa 0: Pantalla de Bienvenida (La caja inicial) -->
-    <div id="stage-0" class="page-content active">
+    <!-- Se eliminó la clase 'active' para que el script la maneje completamente -->
+    <div id="stage-0" class="page-content">
         <div class="content-wrapper">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">¡¡¡¡Feliz cumpleaños pequeño buscador de tesoros!!!!</h1>
             <p class="text-lg md:text-xl mb-8">
@@ -372,7 +373,7 @@
 </div>
 
 <script>
-    // Variable para la etapa actual, inicia en 0
+    // Variable para la etapa actual, se inicializa en 0
     let currentStage = 0;
 
     // Función para mostrar un mensaje emergente
@@ -396,13 +397,12 @@
             return;
         }
 
-        // Ocultar la etapa actual
-        const currentStageElement = document.getElementById(`stage-${currentStage}`);
-        if (currentStageElement) {
-            currentStageElement.classList.remove('active');
-        }
+        // Ocultar todas las páginas
+        document.querySelectorAll('.page-content').forEach(element => {
+            element.classList.remove('active');
+        });
 
-        // Mostrar la nueva etapa
+        // Mostrar solo la página correcta
         currentStage = stageNumber;
         const newStageElement = document.getElementById(`stage-${currentStage}`);
         if (newStageElement) {
@@ -460,30 +460,20 @@
         }
     });
 
-    // Nueva función para verificar si hay un parámetro 'stage' en la URL
-    function checkURLForStage() {
+    // Llama a esta función al cargar la página para determinar la etapa inicial
+    window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const stageParam = urlParams.get('stage');
-
+        let initialStage = 0; // La etapa inicial por defecto es 0
         if (stageParam) {
             const stageNumber = parseInt(stageParam);
-            // Asegúrate de que el número sea válido antes de intentar ir a la etapa
+            // Si el parámetro es un número válido, lo usamos como etapa inicial
             if (!isNaN(stageNumber)) {
-                // Ir a la etapa especificada en la URL en lugar de la etapa 0
-                goToStage(stageNumber);
-            } else {
-                // Si el parámetro no es un número, ir a la etapa inicial por defecto
-                goToStage(0);
+                initialStage = stageNumber;
             }
-        } else {
-            // Si no hay parámetro 'stage', ir a la etapa inicial por defecto
-            goToStage(0);
         }
-    }
-
-    // Llama a la nueva función cuando la página se ha cargado completamente
-    window.onload = function() {
-        checkURLForStage();
+        // Navegamos a la etapa inicial correcta
+        goToStage(initialStage);
     };
 
 </script>
