@@ -293,9 +293,6 @@
         <p class="text-base md:text-lg mb-4">
             "Pensaste que ya había terminado la aventura?! pues estas equivocado! Tienes un acertijo más! Piensa y acertarás, el lugar a donde te encaminarás es donde los sueños se construyen con esfuerzo y mucho trabajo!! Si estás dispuesto a trabajar para cumplir tus sueños ya sabes a donde debes ir!!"
         </p>
-        <button onclick="goToStage(9)" class="adventure-button bg-green-600 hover:bg-green-700 mt-8">
-            Ir a La Joye
-        </button>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
         </button>
@@ -395,10 +392,10 @@
     <div id="stage-14" class="page-content">
         <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Felicitaciones, Explorador!</h2>
         <p class="text-base md:text-lg mb-4">
-            "Has completado la misión. Este diente no es solo un fósil. Es la prueba de que todo gran explorador deja huella. ¿Listo para tu próxima aventura?"
+            espero que hayas tenido una busqueda del tesoro muy divertida, que te hayan gustado tus regalos y que hayas aprendido lecciones valiosas
         </p>
         <button onclick="goToStage(15)" class="adventure-button bg-yellow-500 hover:bg-yellow-600 mt-8">
-            ¡Ver la sorpresa final!
+            despedida
         </button>
         <button onclick="goToNextStage()" class="skip-button">
             Avanzar >
@@ -407,13 +404,13 @@
 
     <!-- Etapa 15: Sorpresa de Bob Esponja -->
     <div id="stage-15" class="page-content">
-        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Sorpresa!</h2>
+        <h2 class="text-2xl md:text-4xl font-semibold mb-6">¡Bien hecho!</h2>
         <!-- AQUÍ VA EL VIDEO DE BOB ESPONJA -->
         <div class="video-responsive rounded-xl overflow-hidden mb-8">
             <iframe id="video-sorpresa" width="560" height="315" src="https://www.youtube.com/embed/eFfxl63UOF4?autoplay=0" title="Sorpresa final de Bob Esponja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <p class="text-base md:text-lg mb-4">
-            ¡Hola Víctor! ¡Nos vemos el **2 de septiembre** para pasar un día inolvidable en el **Hotel Nickelodeon** de Riviera Maya. ¡Es una fiesta, y tú eres el invitado de honor!
+            feliz cumpleaños!!!
         </p>
     </div>
 
@@ -494,7 +491,7 @@
         document.getElementById('medallas-button').addEventListener('click', () => {
             const medallas = document.getElementById('medallas-input').value;
             const medallasFeedback = document.getElementById('medallas-feedback');
-            const correctAnswer = 25; // Número correcto de medallas
+            const correctAnswer = 38; // Número correcto de medallas
             if (parseInt(medallas) === correctAnswer) {
                 medallasFeedback.innerHTML = '<span class="text-green-400">¡Respuesta correcta! ¡Trabajo bien hecho!</span>';
                 setTimeout(() => goToStage(10), 1500);
