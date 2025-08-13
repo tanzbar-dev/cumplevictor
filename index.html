@@ -427,10 +427,32 @@
         
         // Función para mostrar solo una etapa específica
         const showStage = (stageNumber) => {
-            document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.page-content').forEach(page => {
+                // Antes de ocultar la página, detenemos el video si lo tiene
+                if (page.classList.contains('active')) {
+                    const videoIframe = page.querySelector('iframe');
+                    if (videoIframe) {
+                        const originalSrc = videoIframe.src.replace('autoplay=1', 'autoplay=0');
+                        videoIframe.src = originalSrc;
+                    }
+                }
+                page.classList.remove('active');
+            });
+
             const newStage = document.getElementById(`stage-${stageNumber}`);
             if (newStage) {
                 newStage.classList.add('active');
+                
+                // Si la nueva etapa tiene un video, lo reproducimos automáticamente
+                const videoIframe = newStage.querySelector('iframe');
+                if (videoIframe) {
+                    const videoSrc = videoIframe.src;
+                    // Solo si no está ya reproduciéndose
+                    if (!videoSrc.includes('autoplay=1')) {
+                        videoIframe.src = videoSrc.replace('autoplay=0', 'autoplay=1');
+                    }
+                }
+
                 // Hacemos que la página se desplace hacia la parte superior para que el usuario siempre vea la nueva etapa.
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
